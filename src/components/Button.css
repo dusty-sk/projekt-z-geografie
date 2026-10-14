@@ -1,0 +1,111 @@
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--paper);
+  --btn-border: var(--line-strong);
+  --btn-bg-hover: rgba(244, 239, 230, 0.06);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.045em;
+  line-height: 1.2;
+  text-align: left;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.btn__label {
+  position: relative;
+}
+
+.btn__arrow {
+  position: relative;
+  width: 0.95em;
+  height: 1px;
+  flex: none;
+  background: currentColor;
+  transition: width var(--dur) var(--ease-out);
+}
+
+.btn__arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0.42em;
+  height: 0.42em;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+  transform-origin: 100% 50%;
+}
+
+.btn:hover {
+  background: var(--btn-bg-hover);
+  border-color: var(--paper-40);
+  transform: translateY(-1px);
+}
+
+.btn:hover .btn__arrow {
+  width: 1.5em;
+}
+
+.btn:active {
+  transform: translateY(1px);
+  transition-duration: var(--dur-fast);
+}
+
+/* --- Primary: turquoise, used only for the most important action --- */
+.btn--primary {
+  --btn-bg: var(--aqua);
+  --btn-fg: var(--ink-950);
+  --btn-border: var(--aqua);
+  --btn-bg-hover: var(--aqua-bright);
+  font-weight: 600;
+}
+
+.btn--primary:hover {
+  border-color: var(--aqua-bright);
+  box-shadow: 0 12px 32px -14px rgba(99, 211, 196, 0.7);
+}
+
+/* --- Ghost: quiet outline --- */
+.btn--ghost {
+  --btn-border: var(--line-strong);
+  color: var(--paper-90);
+}
+
+/* --- Sizes --- */
+.btn--lg {
+  padding: 1.05rem 1.85rem;
+  font-size: var(--step-0);
+}
+
+.btn--sm {
+  padding: 0.6rem 1.1rem;
+  font-size: var(--step--2);
+}
+
+/* --- On light/turquoise fills, keep the arrow legible on hover --- */
+.btn--primary:hover .btn__arrow {
+  width: 1.5em;
+}
+
+@media (max-width: 30rem) {
+  .btn {
+    white-space: normal;
+    text-align: left;
+  }
+}

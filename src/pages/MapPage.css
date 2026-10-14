@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Map page — filters + synchronized list + Leaflet map
+   ========================================================================== */
+
+.map-page {
+  position: relative;
+  overflow: hidden;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 900' preserveAspectRatio='none'%3E%3Cpath fill='none' stroke='rgba(99,211,196,0.045)' stroke-width='1.2' stroke-linecap='round' d='M40,20 C70,60 40,110 62,150 C84,190 44,240 66,280 C88,320 48,370 70,410 C92,450 52,500 74,540 C96,580 56,630 78,670 C96,704 62,750 82,830'/%3E%3Cpath fill='none' stroke='rgba(53,86,140,0.04)' stroke-width='0.9' stroke-linecap='round' d='M58,44 C82,92 56,148 74,192 C92,236 60,290 78,334 C96,378 64,432 82,476 C100,520 68,574 86,618 C100,660 70,706 88,770'/%3E%3C/svg%3E"),
+    var(--ink-900);
+  background-position: left top;
+  background-size: clamp(4.5rem, 8vw, 7.5rem) 100%;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 58rem) {
+  .map-page {
+    background-size: clamp(3rem, 6vw, 4.5rem) 100%;
+  }
+}
+
+.map-page__head {
+  padding-top: calc(var(--nav-h) + clamp(3rem, 7vw, 5.5rem));
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.map-page__title {
+  margin-top: 0.75rem;
+  font-size: var(--step-4);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.map-page__lede {
+  margin-top: 1rem;
+  max-width: 52rem;
+  font-size: var(--step-1);
+  line-height: 1.65;
+  color: var(--paper-72);
+}
+
+.map-page__filters {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 600;
+  padding-block: 1rem;
+  background: rgba(9, 15, 26, 0.92);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.map-page__body {
+  display: grid;
+  grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+  border-bottom: 1px solid var(--line);
+}
+
+.map-page__list {
+  border-right: 1px solid var(--line);
+  max-height: min(78svh, 52rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.map-page__map {
+  position: relative;
+  min-height: min(78svh, 52rem);
+}
+
+@media (max-width: 58rem) {
+  .map-page__body {
+    grid-template-columns: 1fr;
+  }
+
+  .map-page__map {
+    order: -1;
+    min-height: 58svh;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .map-page__list {
+    border-right: 0;
+    max-height: none;
+  }
+}

@@ -1,0 +1,225 @@
+/* ==========================================================================
+   Map controls — filters + synchronized location list
+   ========================================================================== */
+
+/* ---- Filters ---- */
+
+.map-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+.map-filters__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.map-chip {
+  --chip-accent: var(--aqua);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.85rem;
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--paper-72);
+  background: rgba(9, 15, 26, 0.6);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.map-chip:hover {
+  color: var(--paper);
+  border-color: var(--line-strong);
+}
+
+.map-chip.is-active {
+  color: var(--ink-950);
+  background: var(--aqua);
+  border-color: var(--aqua);
+}
+
+.map-chip__glyph {
+  color: var(--chip-accent);
+  font-size: 0.85em;
+}
+
+.map-chip.is-active .map-chip__glyph {
+  color: var(--ink-950);
+}
+
+.map-chip__count {
+  display: inline-flex;
+  min-width: 1.4em;
+  justify-content: center;
+  padding: 0.05em 0.4em;
+  font-size: 0.82em;
+  font-variant-numeric: tabular-nums;
+  color: var(--paper-56);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+}
+
+.map-chip.is-active .map-chip__count {
+  color: var(--ink-950);
+  background: rgba(4, 7, 13, 0.16);
+}
+
+.map-filters__status {
+  font-size: var(--step--1);
+  color: var(--paper-56);
+}
+
+.map-filters__status strong {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+/* ---- List ---- */
+
+.maplist {
+  display: grid;
+  position: relative;
+  /* Thin interwoven curl running behind the rows on tall lists. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 640' preserveAspectRatio='none'%3E%3Cpath fill='none' stroke='rgba(99,211,196,0.04)' stroke-width='1.1' stroke-linecap='round' d='M22,24 C50,110 18,190 42,270 C66,350 30,430 56,510 C72,566 46,600 62,624'/%3E%3Cpath fill='none' stroke='rgba(53,86,140,0.035)' stroke-width='0.9' stroke-linecap='round' d='M36,60 C58,140 32,220 52,300 C72,380 42,460 62,540'/%3E%3C/svg%3E");
+  background-position: left center;
+  background-size: clamp(3rem, 5vw, 4.5rem) 100%;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 58rem) {
+  .maplist {
+    background: none;
+  }
+}
+
+.maplist--empty {
+  padding: 2rem 1.5rem;
+  color: var(--paper-56);
+  font-size: var(--step--1);
+}
+
+.maplist__item {
+  --accent: var(--aqua);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  border-bottom: 1px solid var(--line-soft);
+  border-left: 2px solid transparent;
+  transition: background-color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+}
+
+.maplist__item:hover {
+  background: var(--ink-850);
+}
+
+.maplist__item.is-selected {
+  background: var(--ink-800);
+  border-left-color: var(--accent);
+}
+
+.maplist__row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  text-align: left;
+  padding: 1.15rem 1.25rem;
+}
+
+.maplist__index {
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.maplist__body {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.maplist__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+}
+
+.maplist__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.maplist__name {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.maplist__summary {
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--paper-56);
+}
+
+.maplist__open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.15rem 1.25rem;
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-56);
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.maplist__open:hover {
+  color: var(--aqua);
+}
+
+.maplist__arrow {
+  width: 0.85em;
+  height: 1px;
+  background: currentColor;
+  position: relative;
+}
+
+.maplist__arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0.4em;
+  height: 0.4em;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+@media (max-width: 40rem) {
+  .map-filters {
+    justify-content: flex-start;
+  }
+
+  .maplist__open {
+    display: none;
+  }
+}
