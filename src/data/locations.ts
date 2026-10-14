@@ -822,7 +822,7 @@ export const locations: readonly Location[] = [
 
 /** Served path of a photograph, e.g. "/images/polana-skliarovo.jpg". */
 export function locationImagePath(slug: string): string {
-  return `/images/${slug}`;
+  return `${import.meta.env.BASE_URL}images/${slug}`;
 }
 
 export function getLocation(id: string | undefined): Location | undefined {

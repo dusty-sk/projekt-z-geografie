@@ -9,7 +9,8 @@ import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 
 const PORT = 4188;
-const BASE = `http://localhost:${PORT}`;
+const REPO_BASE = "/projekt-z-geografie";
+const BASE = `http://localhost:${PORT}${REPO_BASE}`;
 const OUT = "tmp/verify";
 mkdirSync(OUT, { recursive: true });
 

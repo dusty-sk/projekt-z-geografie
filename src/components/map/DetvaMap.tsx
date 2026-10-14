@@ -30,7 +30,7 @@ function buildPopup(location: Location): string {
       <p class="map-popup__group">${escapeHtml(category.label)} · ${escapeHtml(scope)}</p>
       <p class="map-popup__title">${escapeHtml(location.name)}</p>
       <p class="map-popup__summary">${escapeHtml(location.summary)}</p>
-      <a class="map-popup__link" data-location-id="${escapeHtml(location.id)}" href="/miesta/${escapeHtml(location.id)}">Otvoriť profil</a>
+      <a class="map-popup__link" data-location-id="${escapeHtml(location.id)}" href="${import.meta.env.BASE_URL}miesta/${escapeHtml(location.id)}">Otvoriť profil</a>
     </div>`;
 }
 

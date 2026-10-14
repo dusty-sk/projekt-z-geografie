@@ -6,7 +6,9 @@ import { once } from "node:events";
 
 const DEV = process.argv.includes("--dev");
 const PORT = DEV ? 5199 : 4199;
-const BASE = `http://localhost:${PORT}`;
+const ORIGIN = `http://localhost:${PORT}`;
+const REPO_BASE = "/projekt-z-geografie";
+const BASE = `${ORIGIN}${REPO_BASE}`;
 const ROUTES = ["/", "/mapa", "/miesta", "/vyskum", "/region", "/o-projekte"];
 const mode = DEV ? "dev" : "preview";
 
@@ -53,9 +55,10 @@ try {
 
     // Confirm the built JS/CSS assets are served.
     const indexHtml = await (await fetch(`${BASE}/`)).text();
-    const asset = indexHtml.match(/src="(\/assets\/[^"]+\.js)"/)?.[1];
+    const asset = indexHtml.match(/src="([^"]+\.js)"/)?.[1];
     if (asset) {
-      const res = await fetch(`${BASE}${asset}`);
+      const assetUrl = new URL(asset, `${BASE}/`).toString();
+      const res = await fetch(assetUrl);
       failed ||= !res.ok;
       console.log(`${res.ok ? "PASS" : "FAIL"}  asset ${asset} (${res.status})`);
     }
