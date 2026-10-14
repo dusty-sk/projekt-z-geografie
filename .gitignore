@@ -1,0 +1,24 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+*.log
+npm-debug.log*
+
+# Local environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Vite / TypeScript build cache
+.vite
+*.tsbuildinfo
+
+# Local verification artifacts (screenshots, etc.)
+tmp
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
