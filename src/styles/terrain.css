@@ -1,0 +1,122 @@
+/* ==========================================================================
+   Terrain layer — cartographic background motifs
+   A graticule (map grid) and contour lines (elevation bands), authored as
+   reusable decorative layers. They carry the geography motif directly instead
+   of generic curls, and are always masked so they never fight the content.
+   ========================================================================== */
+
+.terrain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: var(--terrain-opacity, 1);
+}
+
+.terrain::before,
+.terrain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+}
+
+/* --- Contour field: broad elevation bands --------------------------------- */
+
+.terrain__contours,
+.terrain--field::after,
+.terrain--band::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 620' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='rgba(126,168,216,0.15)' stroke-width='1.3' stroke-linecap='round'%3E%3Cpath d='M-20 70 C120 30 220 120 360 86 C500 52 620 128 760 92 C830 74 880 86 920 70'/%3E%3Cpath d='M-20 150 C130 108 235 196 372 160 C512 124 632 200 772 162 C838 144 884 154 920 140'/%3E%3Cpath d='M-20 232 C120 190 240 280 380 244 C520 208 640 284 780 246 C842 228 886 238 920 224'/%3E%3Cpath d='M-20 314 C135 272 250 360 388 324 C528 288 648 364 788 326 C846 310 888 320 920 306'/%3E%3Cpath d='M-20 396 C120 354 245 442 382 406 C522 370 642 446 782 408 C842 392 886 402 920 388'/%3E%3Cpath d='M-20 478 C130 436 236 524 374 488 C514 452 634 528 774 490 C836 474 882 484 920 470'/%3E%3Cpath d='M-20 560 C120 518 240 606 378 570 C518 534 638 610 778 572 C838 556 884 566 920 552'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 100% 100%;
+}
+
+/* --- Graticule: fine coordinate grid -------------------------------------- */
+
+.terrain__grid,
+.terrain--field::before,
+.terrain--grid::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cpath d='M0 60 H120 M60 0 V120' stroke='rgba(126,168,216,0.10)' stroke-width='1'/%3E%3Cpath d='M0 20 H120 M0 40 H120 M0 80 H120 M0 100 H120 M20 0 V120 M40 0 V120 M80 0 V120 M100 0 V120' stroke='rgba(126,168,216,0.045)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
+/* --- Summit: nested closed contours (a hill) ------------------------------ */
+
+.terrain--corner::after,
+.terrain__summit {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 560' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='rgba(99,211,196,0.13)' stroke-width='1.3' stroke-linecap='round'%3E%3Cpath d='M96 320 C140 206 286 138 392 168 C516 202 604 142 664 224 C724 306 654 412 552 452 C432 500 300 476 200 432 C120 396 66 388 96 320 Z'/%3E%3Cpath d='M150 322 C188 232 304 178 396 204 C500 233 570 186 620 250 C670 314 616 396 532 428 C436 464 326 446 244 410 C180 382 132 372 150 322 Z'/%3E%3Cpath d='M206 324 C238 254 330 212 402 234 C488 258 540 224 578 274 C616 324 576 384 510 408 C432 436 344 422 282 394 C234 372 194 362 206 324 Z'/%3E%3Cpath d='M262 326 C288 276 356 246 410 264 C476 284 514 260 542 296 C570 332 542 372 492 390 C432 410 366 400 322 380 C288 364 254 352 262 326 Z'/%3E%3Cpath d='M318 328 C338 296 382 278 418 292 C462 306 486 292 506 314 C526 338 508 360 476 372 C438 386 394 380 364 366 C344 356 314 346 318 328 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+}
+
+/* --------------------------------------------------------------------------
+   Variants
+   -------------------------------------------------------------------------- */
+
+/* Page headers: a quiet, edge-faded grid plus one summit contour. */
+.terrain--head::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cpath d='M0 60 H120 M60 0 V120' stroke='rgba(126,168,216,0.10)' stroke-width='1'/%3E%3Cpath d='M0 20 H120 M0 40 H120 M0 80 H120 M0 100 H120 M20 0 V120 M40 0 V120 M80 0 V120 M100 0 V120' stroke='rgba(126,168,216,0.045)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  mask-image: linear-gradient(115deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.12) 46%, transparent 72%);
+  -webkit-mask-image: linear-gradient(115deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.12) 46%, transparent 72%);
+}
+
+.terrain--head::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 560' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='rgba(99,211,196,0.12)' stroke-width='1.3' stroke-linecap='round'%3E%3Cpath d='M96 320 C140 206 286 138 392 168 C516 202 604 142 664 224 C724 306 654 412 552 452 C432 500 300 476 200 432 C120 396 66 388 96 320 Z'/%3E%3Cpath d='M150 322 C188 232 304 178 396 204 C500 233 570 186 620 250 C670 314 616 396 532 428 C436 464 326 446 244 410 C180 382 132 372 150 322 Z'/%3E%3Cpath d='M206 324 C238 254 330 212 402 234 C488 258 540 224 578 274 C616 324 576 384 510 408 C432 436 344 422 282 394 C234 372 194 362 206 324 Z'/%3E%3Cpath d='M262 326 C288 276 356 246 410 264 C476 284 514 260 542 296 C570 332 542 372 492 390 C432 410 366 400 322 380 C288 364 254 352 262 326 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 104% 6%;
+  background-size: min(46rem, 62vw) auto;
+  opacity: 0.9;
+}
+
+/* Wide sections: grid + full contour field, faded top and bottom. */
+.terrain--field {
+  opacity: var(--terrain-opacity, 0.85);
+}
+
+.terrain--field::before {
+  background-image: none;
+}
+
+.terrain--field::after {
+  mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0.5) 74%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0.5) 74%, transparent 100%);
+}
+
+/* Panorama / closing bands: contours confined to a lower band. */
+.terrain--band::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 380' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='rgba(126,168,216,0.16)' stroke-width='1.3' stroke-linecap='round'%3E%3Cpath d='M-20 60 C130 18 240 108 380 72 C520 36 640 112 780 74 C842 56 886 66 920 52'/%3E%3Cpath d='M-20 150 C120 108 245 198 382 162 C522 126 642 202 782 164 C842 148 886 158 920 144'/%3E%3Cpath d='M-20 240 C135 198 250 288 388 252 C528 216 648 292 788 254 C846 238 890 248 920 234'/%3E%3Cpath d='M-20 330 C120 288 240 378 378 342 C518 306 638 382 778 344 C838 328 884 338 920 324'/%3E%3C/g%3E%3C/svg%3E");
+  background-position: center bottom;
+  background-size: 100% 60%;
+  opacity: 0.9;
+}
+
+/* Fully hand-placed layers (no auto pseudo content). */
+.terrain--corner::after {
+  background-repeat: no-repeat;
+  background-position: 96% 8%;
+  background-size: min(40rem, 60vw) auto;
+}
+
+/* --------------------------------------------------------------------------
+   Summit watermark: the same closed-contour rings, screened over photographic
+   heroes and page headers so imagery carries the cartographic signature.
+   -------------------------------------------------------------------------- */
+
+.terrain--summit::after,
+.ph__media::after,
+.loc-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 560' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='rgba(99,211,196,0.16)' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M96 320 C140 206 286 138 392 168 C516 202 604 142 664 224 C724 306 654 412 552 452 C432 500 300 476 200 432 C120 396 66 388 96 320 Z'/%3E%3Cpath d='M150 322 C188 232 304 178 396 204 C500 233 570 186 620 250 C670 314 616 396 532 428 C436 464 326 446 244 410 C180 382 132 372 150 322 Z'/%3E%3Cpath d='M206 324 C238 254 330 212 402 234 C488 258 540 224 578 274 C616 324 576 384 510 408 C432 436 344 422 282 394 C234 372 194 362 206 324 Z'/%3E%3Cpath d='M262 326 C288 276 356 246 410 264 C476 284 514 260 542 296 C570 332 542 372 492 390 C432 410 366 400 322 380 C288 364 254 352 262 326 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 103% -6%;
+  background-size: min(50rem, 66vw) auto;
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  mask-image: linear-gradient(205deg, black 0%, rgba(0, 0, 0, 0.32) 44%, transparent 70%);
+  -webkit-mask-image: linear-gradient(205deg, black 0%, rgba(0, 0, 0, 0.32) 44%, transparent 70%);
+}
+
+

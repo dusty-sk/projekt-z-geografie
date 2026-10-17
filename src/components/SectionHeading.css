@@ -1,0 +1,41 @@
+.sec-head {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.sec-head--between {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+}
+
+.sec-head__main {
+  display: grid;
+  gap: 1.15rem;
+  max-width: 46rem;
+}
+
+.sec-head__title {
+  text-wrap: balance;
+}
+
+.sec-head__lede {
+  font-size: var(--step-1);
+  line-height: 1.6;
+  color: var(--paper-72);
+  max-width: 42rem;
+}
+
+.sec-head__actions {
+  padding-bottom: 0.35rem;
+}
+
+@media (max-width: 52rem) {
+  .sec-head--between {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .sec-head__actions {
+    padding-bottom: 0;
+  }
+}
