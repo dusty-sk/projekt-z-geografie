@@ -1,5 +1,0 @@
-/* Graceful fallback styling for AppImage. The element itself stays an <img>,
-   so existing sizing / aspect-ratio / object-fit rules continue to apply. */
-img[data-fallback] {
-  background: var(--ink-800);
-}
