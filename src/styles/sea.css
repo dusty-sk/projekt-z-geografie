@@ -1,0 +1,246 @@
+/* ==========================================================================
+   Sea — layered animated swells
+   One reusable motif, shared by the page footer and by section wave fields.
+   Four independent bands, each a seamless one-period tile (tile edges join),
+   drift at their own speed and direction. Fills are semi-transparent, so the
+   overlapping bands accumulate faint depth — a calm night sea. Reduced-motion
+   is honoured globally by the animation kill in base.css.
+   ========================================================================== */
+
+.sea {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Punch up chroma and crest separation so the swells hold their colour on
+     lower-contrast (IPS/LED) panels, without lifting overall brightness. */
+  filter: saturate(1.55) contrast(1.14);
+}
+
+.sea__layer {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat-x;
+  background-position: 0 bottom;
+  will-change: background-position;
+}
+
+@keyframes sea-back {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -480px;
+  }
+}
+
+@keyframes sea-mid {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 420px;
+  }
+}
+
+@keyframes sea-near {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -360px;
+  }
+}
+
+@keyframes sea-front {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 320px;
+  }
+}
+
+/* Farthest band: highest crest, coldest, slowest. */
+.sea__layer--back {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cpath d='M0 120 C110 74 290 166 400 120 L400 400 L0 400 Z' fill='rgba(24,96,205,0.07)'/%3E%3Cpath d='M0 120 C110 74 290 166 400 120' fill='none' stroke='rgba(96,170,255,0.11)' stroke-width='1.1'/%3E%3C/svg%3E");
+  background-size: 480px 72%;
+  animation: sea-back 34s linear infinite;
+}
+
+.sea__layer--mid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cpath d='M0 150 C110 106 290 194 400 150 L400 400 L0 400 Z' fill='rgba(18,138,205,0.08)'/%3E%3Cpath d='M0 150 C110 106 290 194 400 150' fill='none' stroke='rgba(52,235,205,0.12)' stroke-width='1.1'/%3E%3C/svg%3E");
+  background-size: 420px 60%;
+  animation: sea-mid 23s linear infinite;
+}
+
+.sea__layer--near {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cpath d='M0 180 C110 138 290 222 400 180 L400 400 L0 400 Z' fill='rgba(20,166,208,0.08)'/%3E%3Cpath d='M0 180 C110 138 290 222 400 180' fill='none' stroke='rgba(56,240,226,0.15)' stroke-width='1.2'/%3E%3Cpath d='M0 180 C110 138 290 222 400 180' fill='none' stroke='rgba(228,255,252,0.3)' stroke-width='1.8' stroke-linecap='round' stroke-dasharray='1 11'/%3E%3C/svg%3E");
+  background-size: 360px 50%;
+  animation: sea-near 15s linear infinite;
+}
+
+/* Nearest band: lowest crest, brightest crest light, quickest. */
+.sea__layer--front {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cpath d='M0 210 C110 170 290 250 400 210 L400 400 L0 400 Z' fill='rgba(32,196,212,0.09)'/%3E%3Cpath d='M0 206 C110 166 290 246 400 206' fill='none' stroke='rgba(130,248,246,0.07)' stroke-width='13' stroke-linecap='round'/%3E%3Cpath d='M0 210 C110 170 290 250 400 210' fill='none' stroke='rgba(74,242,236,0.22)' stroke-width='1.2'/%3E%3Cpath d='M0 210 C110 170 290 250 400 210' fill='none' stroke='rgba(242,255,253,0.5)' stroke-width='2.2' stroke-linecap='round' stroke-dasharray='1 9'/%3E%3C/svg%3E");
+  background-size: 320px 42%;
+  animation: sea-front 10s linear infinite;
+}
+
+/* Rising bubbles drifting up through the water. */
+.sea__layer--bubbles {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cg fill='rgba(140,240,246,0.26)'%3E%3Ccircle cx='22' cy='58' r='2'/%3E%3Ccircle cx='74' cy='132' r='3'/%3E%3Ccircle cx='120' cy='38' r='1.6'/%3E%3Ccircle cx='164' cy='214' r='2.6'/%3E%3Ccircle cx='212' cy='92' r='2'/%3E%3Ccircle cx='252' cy='176' r='3.2'/%3E%3Ccircle cx='40' cy='252' r='2'/%3E%3Ccircle cx='192' cy='286' r='1.8'/%3E%3Ccircle cx='278' cy='66' r='2.2'/%3E%3Ccircle cx='106' cy='188' r='1.5'/%3E%3C/g%3E%3Cg fill='none' stroke='rgba(140,240,246,0.2)' stroke-width='1'%3E%3Ccircle cx='150' cy='150' r='3.4'/%3E%3Ccircle cx='232' cy='240' r='2.6'/%3E%3Ccircle cx='62' cy='104' r='2.2'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  background-position: 0 0;
+  opacity: 0.9;
+  -webkit-mask-image: linear-gradient(180deg, transparent 16%, rgba(0, 0, 0, 0.45) 52%, rgba(0, 0, 0, 0.85) 100%);
+  mask-image: linear-gradient(180deg, transparent 16%, rgba(0, 0, 0, 0.45) 52%, rgba(0, 0, 0, 0.85) 100%);
+  animation: sea-bubbles 17s linear infinite;
+}
+
+@keyframes sea-bubbles {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -300px;
+  }
+}
+
+/* Four line-art sailboats, one per band, each drifting at exactly the speed of
+   the swell it rides, so every hull holds a crest instead of wandering across
+   the bands. Sea.tsx measures each hull and writes --boat-from / --boat-to /
+   --boat-duration so the journey is a whole number of the band's tiles with both
+   ends clear of the edges (the wrap is never seen), plus a random rig and a head
+   start of whole tiles — a whole tile is one crest period, so the lock survives
+   the head start. The vertical anchor is the crest-line peak of the band, which
+   is why each band class below carries its own bottom offset. On top of the
+   drift they bob, heel and surge as they ride, the pennant flutters and the bow
+   foam shimmers; reduced motion leaves them moored in view, spread along the
+   swell. The bands alternate direction back to front, so the fleet crosses both
+   ways, and the two leftward bands are mirrored to face their travel. */
+.sea__boat {
+  position: absolute;
+  --boat-from: -400px;
+  --boat-to: -400px;
+  animation-name: sea-boat-drift;
+  animation-duration: var(--boat-duration, 60s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: var(--boat-delay, 0s);
+}
+
+.sea__boat > svg {
+  display: none;
+  width: 100%;
+  height: auto;
+  transform-origin: 50% 100%;
+  animation: sea-boat-ride 5s ease-in-out infinite;
+}
+
+.sea__boat[data-rig="sloop"] > svg[data-rig="sloop"],
+.sea__boat[data-rig="schooner"] > svg[data-rig="schooner"] {
+  display: block;
+}
+
+/* Farthest band: smallest, softest and slowest of the four. */
+.sea__boat--back {
+  left: 26%;
+  bottom: 52.4%;
+  width: clamp(26px, 2.9vw, 48px);
+  opacity: 0.5;
+  transform: scaleX(-1);
+}
+
+.sea__boat--back > svg {
+  animation-duration: 11s;
+}
+
+.sea__boat--mid {
+  left: 18%;
+  bottom: 39%;
+  width: clamp(32px, 3.4vw, 56px);
+  opacity: 0.6;
+}
+
+.sea__boat--mid > svg {
+  animation-duration: 9s;
+}
+
+.sea__boat--near {
+  left: 10%;
+  bottom: 28.6%;
+  width: clamp(38px, 4vw, 64px);
+  opacity: 0.72;
+  transform: scaleX(-1);
+}
+
+.sea__boat--near > svg {
+  animation-duration: 7s;
+}
+
+.sea__boat--front {
+  left: 4%;
+  bottom: 20.8%;
+  width: clamp(58px, 6vw, 104px);
+}
+
+/* Both ends of the journey are off the edges, and the value that the animation
+   reads comes from Sea.tsx; the fallback keeps the boats out of sight until it
+   has measured. */
+@keyframes sea-boat-drift {
+  from {
+    left: var(--boat-from, -400px);
+  }
+  to {
+    left: var(--boat-to, -400px);
+  }
+}
+
+.sea__boat-pennant {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  animation: sea-boat-pennant 1.7s ease-in-out infinite;
+}
+
+.sea__boat-foam {
+  animation: sea-boat-foam 2.6s linear infinite;
+}
+
+@keyframes sea-boat-ride {
+  0% {
+    transform: translate(0, 0) rotate(-1.5deg);
+  }
+  22% {
+    transform: translate(-1px, -2.5px) rotate(-0.4deg);
+  }
+  46% {
+    transform: translate(0, -4px) rotate(1.2deg);
+  }
+  72% {
+    transform: translate(1px, -2px) rotate(0.7deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(-1.5deg);
+  }
+}
+
+@keyframes sea-boat-pennant {
+  0%,
+  100% {
+    transform: scaleX(1) skewY(0deg);
+  }
+  50% {
+    transform: scaleX(0.5) skewY(8deg);
+  }
+}
+
+@keyframes sea-boat-foam {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+
