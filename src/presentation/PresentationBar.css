@@ -1,0 +1,438 @@
+/* ==========================================================================
+   Presentation bar — the only chrome shown during an immersive demonstration.
+   Height tracks --present-bar, which presentation.css keeps in sync with the
+   layout offset token (--nav-h) so page headers and sticky elements line up.
+   ========================================================================== */
+
+/* Cinematic seating: a soft vignette over the whole stage, but under the bar
+   (both live inside #root's isolated stacking context). */
+.present-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 150px rgba(2, 4, 10, 0.5),
+    inset 0 calc(var(--present-bar, 4.25rem) + 0.5rem) 90px -70px rgba(0, 0, 0, 0.8);
+}
+
+.present-bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 950;
+  height: var(--present-bar, 4.5rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  padding-inline: var(--gutter);
+  background: linear-gradient(180deg, rgba(6, 10, 19, 0.95) 0%, rgba(6, 10, 19, 0.72) 100%);
+  backdrop-filter: saturate(150%) blur(16px);
+  -webkit-backdrop-filter: saturate(150%) blur(16px);
+  border-bottom: 1px solid var(--line-aqua);
+  box-shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.95);
+  animation: present-bar-in 520ms var(--ease-entrance) both;
+}
+
+@keyframes present-bar-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Brand --- */
+
+.present-bar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: none;
+}
+
+.present-bar__mark {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--aqua);
+  filter: drop-shadow(0 0 10px var(--glow-key));
+}
+
+.present-bar__mark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.present-bar__wordmark {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+/* --- Current stop --- */
+
+.present-bar__now {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  margin-inline: auto;
+  min-width: 0;
+}
+
+.present-bar__now-index {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  color: var(--aqua);
+  flex: none;
+}
+
+.present-bar__now-label {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Controls --- */
+
+.present-bar__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: none;
+}
+
+.present-bar__nav {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--paper-72);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.present-bar__nav svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.present-bar__nav:hover:not(:disabled) {
+  color: var(--paper);
+  border-color: var(--aqua);
+  background: rgba(99, 211, 196, 0.08);
+}
+
+.present-bar__nav:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+.present-bar__count {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  color: var(--paper-56);
+  margin-inline: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.present-bar__exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: clamp(0.4rem, 1vw, 0.9rem);
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--line-aqua);
+  border-radius: 999px;
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: linear-gradient(180deg, rgba(99, 211, 196, 0.16), rgba(99, 211, 196, 0.04));
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.present-bar__exit:hover {
+  border-color: var(--aqua);
+  box-shadow: 0 0 26px -6px var(--glow-key);
+}
+
+.present-bar__exit kbd {
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  color: var(--paper-56);
+}
+
+.present-bar__overview {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: clamp(0.4rem, 1vw, 0.9rem);
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-72);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.present-bar__overview:hover {
+  color: var(--paper);
+  border-color: var(--line-aqua);
+  background: rgba(99, 211, 196, 0.08);
+}
+
+.present-bar__overview[aria-pressed="true"] {
+  color: var(--paper);
+  border-color: var(--aqua);
+  background: rgba(99, 211, 196, 0.14);
+  box-shadow: 0 0 24px -8px var(--glow-key);
+}
+
+.present-bar__overview kbd {
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  color: var(--paper-56);
+}
+
+/* --- Progress --- */
+
+.present-bar__track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: rgba(245, 240, 231, 0.06);
+}
+
+.present-bar__fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--aqua-deep), var(--aqua));
+  box-shadow: 0 0 14px rgba(99, 211, 196, 0.6);
+  transition: width var(--dur) var(--ease-out);
+}
+
+/* --- Compact bar on phones --- */
+
+@media (max-width: 48rem) {
+  .present-bar {
+    gap: 0.5rem;
+  }
+
+  .present-bar__wordmark {
+    display: none;
+  }
+
+  .present-bar__now-label {
+    font-size: var(--step-0);
+  }
+
+  .present-bar__count {
+    display: none;
+  }
+
+  .present-bar__exit-label {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Stop overview (S) — the whole run as a timeline: every stop in order, the
+   current one highlighted, one click to jump anywhere. Sits under the bar and
+   over a scrim so the stage behind stays readable but clearly secondary.
+   ========================================================================== */
+
+.present-overview__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 930;
+  background: rgba(3, 6, 14, 0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: present-overview-fade 220ms var(--ease-out) both;
+}
+
+@keyframes present-overview-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.present-overview {
+  position: fixed;
+  z-index: 940;
+  top: calc(var(--present-bar, 4.25rem) + 0.85rem);
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: min(58rem, calc(100% - 2 * var(--gutter)));
+  max-height: calc(100svh - var(--present-bar, 4.25rem) - 2.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+  border: 1px solid var(--line-aqua);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(6, 10, 19, 0.97), rgba(6, 10, 19, 0.93));
+  backdrop-filter: saturate(150%) blur(18px);
+  -webkit-backdrop-filter: saturate(150%) blur(18px);
+  box-shadow: var(--card-hi), 0 40px 90px -50px rgba(0, 0, 0, 0.95);
+  animation: present-overview-in 280ms var(--ease-entrance) both;
+}
+
+@keyframes present-overview-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -0.8rem);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.present-overview__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.present-overview__eyebrow {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.present-overview__hint {
+  font-size: var(--step--2);
+  color: var(--paper-72);
+}
+
+.present-overview__hint kbd {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  padding: 0.08rem 0.34rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  color: var(--paper-72);
+}
+
+.present-overview__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  list-style: none;
+  background: var(--line-steel-soft);
+  border-block: 1px solid var(--line-steel);
+}
+
+@media (min-width: 44rem) {
+  .present-overview__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.present-overview__stop {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.72rem 0.9rem;
+  text-align: left;
+  background: var(--ink-900);
+  color: var(--paper-90);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.present-overview__stop:hover {
+  background: var(--ink-850);
+  color: var(--paper);
+}
+
+.present-overview__stop:focus-visible {
+  outline: 2px solid var(--aqua);
+  outline-offset: -2px;
+}
+
+.present-overview__stop[aria-current="step"] {
+  color: var(--paper);
+  background: rgba(99, 211, 196, 0.13);
+}
+
+.present-overview__stop-index {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  color: var(--aqua);
+}
+
+.present-overview__stop[aria-current="step"] .present-overview__stop-index {
+  color: var(--aqua-bright);
+}
+
+.present-overview__stop-label {
+  min-width: 0;
+  font-size: var(--step--1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 48rem) {
+  .present-bar__overview {
+    padding: 0.55rem 0.7rem;
+  }
+
+  .present-bar__overview-label {
+    display: none;
+  }
+
+  .present-overview {
+    width: calc(100% - 2 * clamp(0.75rem, 3vw, 1.25rem));
+    max-height: calc(100svh - var(--present-bar, 3.9rem) - 1.75rem);
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Map page — filters + synchronized list + Leaflet map
+   ========================================================================== */
+
+.map-page {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      120% 130% at 84% -8%,
+      rgba(58, 94, 150, 0.2),
+      rgba(6, 11, 23, 0) 58%
+    ),
+    radial-gradient(
+      50rem 30rem at 0% 104%,
+      rgba(99, 211, 196, 0.06),
+      rgba(6, 11, 23, 0) 62%
+    );
+}
+
+.map-page__head {
+  position: relative;
+  padding-top: calc(var(--nav-h) + clamp(3rem, 7vw, 5.5rem));
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.map-page__head .terrain--head {
+  z-index: 0;
+}
+
+.map-page__title {
+  margin-top: 0.75rem;
+  font-size: var(--step-4);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.map-page__lede {
+  margin-top: 1rem;
+  max-width: 52rem;
+  font-size: var(--step-1);
+  line-height: 1.65;
+  color: var(--paper-72);
+}
+
+.map-page__filters {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 600;
+  padding-block: 1rem;
+  background: rgba(9, 15, 26, 0.92);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.map-page__body {
+  display: grid;
+  grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+  background: var(--surface-sunken);
+  border-top: 1px solid var(--line-steel-soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.map-page__list {
+  border-right: 1px solid var(--line);
+  max-height: min(78svh, 52rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--surface-sunken);
+}
+
+.map-page__map {
+  position: relative;
+  min-height: min(78svh, 52rem);
+}
+
+/* Seat the canvas into the page: an inward shade + hairline frame. */
+.map-page__map::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 401;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px var(--line-steel-soft),
+    inset 0 0 120px rgba(3, 6, 16, 0.72);
+}
+
+@media (max-width: 58rem) {
+  .map-page__body {
+    grid-template-columns: 1fr;
+  }
+
+  .map-page__map {
+    order: -1;
+    min-height: 58svh;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .map-page__list {
+    border-right: 0;
+    max-height: none;
+  }
+}
