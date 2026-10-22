@@ -1,0 +1,208 @@
+.world-anchors {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.world-anchor {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  color: rgba(245, 240, 231, 0.48);
+  pointer-events: auto;
+  transition: color 500ms var(--ease-out);
+}
+
+.world-anchor::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.35rem;
+  width: 1.65rem;
+  height: 1px;
+  transform: translateX(-50%) scaleX(0.35);
+  transform-origin: center;
+  background: var(--anchor-line);
+  opacity: 0.36;
+  transition:
+    transform 500ms var(--ease-out),
+    opacity 500ms var(--ease-out);
+}
+
+.world-anchor__pulse {
+  position: absolute;
+  inset: 0.3rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--anchor-halo) 0%, transparent 68%);
+  opacity: 0.48;
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+}
+
+.world-anchor__glyph {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 1.85rem;
+  height: 1.85rem;
+  transition: transform 500ms var(--ease-out);
+}
+
+.world-anchor__glyph svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.world-anchor:hover,
+.world-anchor:focus-visible,
+.world-anchor.is-active {
+  color: var(--paper);
+}
+
+.world-anchor.is-found {
+  color: var(--aqua-bright);
+}
+
+.world-anchor:hover .world-anchor__pulse,
+.world-anchor:focus-visible .world-anchor__pulse,
+.world-anchor.is-active .world-anchor__pulse,
+.world-anchor.is-found .world-anchor__pulse {
+  opacity: 0.95;
+  transform: scale(1.3);
+}
+
+.world-anchor:hover::after,
+.world-anchor:focus-visible::after,
+.world-anchor.is-active::after,
+.world-anchor.is-found::after {
+  transform: translateX(-50%) scaleX(1);
+  opacity: 0.9;
+}
+
+.world-anchor:hover .world-anchor__glyph,
+.world-anchor:focus-visible .world-anchor__glyph,
+.world-anchor.is-active .world-anchor__glyph {
+  transform: scale(1.08);
+}
+
+.world-anchor__label {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  gap: 0.6rem;
+  width: max-content;
+  max-width: 14rem;
+  align-items: center;
+  color: var(--paper);
+  text-align: left;
+  text-shadow:
+    0 1px 2px rgba(1, 3, 8, 0.95),
+    0 0 14px rgba(1, 3, 8, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 300ms var(--ease-out),
+    visibility 300ms var(--ease-out);
+  pointer-events: none;
+}
+
+.world-anchor--right .world-anchor__label {
+  left: calc(100% + 0.55rem);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.world-anchor--left .world-anchor__label {
+  right: calc(100% + 0.55rem);
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: right;
+}
+
+.world-anchor--above .world-anchor__label {
+  left: 50%;
+  bottom: calc(100% + 0.45rem);
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.world-anchor:hover .world-anchor__label,
+.world-anchor:focus-visible .world-anchor__label,
+.world-anchor.is-active .world-anchor__label,
+.world-anchor.is-found .world-anchor__label {
+  opacity: 1;
+  visibility: visible;
+}
+
+.world-anchor__num {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  color: var(--aqua);
+}
+
+.world-anchor.is-found .world-anchor__num {
+  color: var(--aqua-bright);
+}
+
+.world-anchor__text {
+  display: grid;
+  gap: 0.04rem;
+}
+
+.world-anchor__name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.world-anchor__place {
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-72);
+}
+
+@media (max-width: 42rem) {
+  .world-anchor__label {
+    max-width: 9.5rem;
+  }
+
+  .world-anchor__name {
+    font-size: 0.85rem;
+  }
+
+  .world-anchor__place {
+    font-size: 0.5rem;
+  }
+
+  .world-anchor__glyph {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world-anchor,
+  .world-anchor::after,
+  .world-anchor__glyph,
+  .world-anchor__pulse,
+  .world-anchor__label {
+    transition-duration: 0.001ms;
+  }
+}

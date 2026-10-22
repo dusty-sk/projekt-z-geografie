@@ -1,0 +1,408 @@
+.atmosphere {
+  --atmo-scroll: 0;
+}
+
+.atmosphere-landscape {
+  pointer-events: none;
+}
+
+.atmosphere .world-scene__terrain {
+  overflow: hidden;
+}
+
+.atmosphere .world-scene__ridge--back {
+  fill: url(#atmo-ridge-back);
+}
+
+.atmosphere .world-scene__ridge--far,
+.atmosphere .world-scene__ridge--shoulder {
+  fill: url(#atmo-ridge-far);
+}
+
+.atmosphere .world-scene__ridge--mid {
+  fill: url(#atmo-ridge-mid);
+}
+
+.atmosphere .world-scene__lake {
+  fill: url(#atmo-lake);
+}
+
+.atmosphere .world-scene__ground {
+  fill: url(#atmo-ground);
+}
+
+.atmosphere .world-scene__clouds {
+  translate: calc(var(--atmo-scroll) * -9vw) calc(var(--atmo-scroll) * 4vh);
+}
+
+.atmosphere .world-scene__clouds--near {
+  translate: calc(var(--atmo-scroll) * 6vw) calc(var(--atmo-scroll) * 2vh);
+}
+
+.atmosphere .world-scene__birds {
+  translate: calc(var(--atmo-scroll) * 12vw) calc(var(--atmo-scroll) * -4vh);
+}
+
+.atmosphere .world-scene__sun {
+  translate: calc(var(--atmo-scroll) * -7vw) calc(var(--atmo-scroll) * 8vh);
+}
+
+.atmosphere .world-scene__moon {
+  translate: calc(var(--atmo-scroll) * -5vw) calc(var(--atmo-scroll) * 7vh);
+}
+
+.atmosphere .world-scene__horizon-glow {
+  translate: calc(var(--atmo-scroll) * -3vw) calc(var(--atmo-scroll) * 3vh);
+}
+
+.atmosphere .world-scene__grass-tuft {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation-name: atmo-grass-sway;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.atmosphere .world-scene__pine {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: atmo-tree-sway 11s ease-in-out infinite alternate;
+}
+
+.atmosphere .world-scene__frame-tree {
+  transform-origin: 50% 100%;
+  animation: atmo-tree-sway 15s ease-in-out infinite alternate;
+}
+
+.atmosphere .world-scene__frame-tree--left {
+  animation-delay: -5.2s;
+  animation-duration: 16.5s;
+}
+
+.atmosphere .world-scene__frame-tree--right {
+  animation-delay: -10.4s;
+  animation-duration: 14s;
+}
+
+.atmosphere .world-scene__forest {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: atmo-forest-sway 22s ease-in-out infinite alternate;
+}
+
+.atmosphere .world-scene__forest--far {
+  animation-delay: -8s;
+  animation-duration: 28s;
+}
+
+.atmosphere .world-scene__forest--mid {
+  animation-delay: -15s;
+  animation-duration: 24s;
+}
+
+.atmosphere .world-scene__forest--near {
+  animation-delay: -4s;
+  animation-duration: 19s;
+}
+
+@keyframes atmo-grass-sway {
+  from {
+    transform: rotate(-1.6deg);
+  }
+  to {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes atmo-tree-sway {
+  from {
+    transform: rotate(-0.45deg);
+  }
+  to {
+    transform: rotate(0.65deg);
+  }
+}
+
+@keyframes atmo-forest-sway {
+  from {
+    transform: rotate(-0.08deg);
+  }
+  to {
+    transform: rotate(0.12deg);
+  }
+}
+
+.atmosphere--dawn .world-scene__sky-layer--dawn,
+.atmosphere--day .world-scene__sky-layer--day,
+.atmosphere--dusk .world-scene__sky-layer--dusk,
+.atmosphere--night .world-scene__sky-layer--night {
+  opacity: 1;
+}
+
+.atmosphere--night .world-scene__star.is-twinkle {
+  animation-play-state: running;
+}
+
+.atmosphere--dawn .world-scene__horizon-glow::before,
+.atmosphere--day .world-scene__horizon-glow::before,
+.atmosphere--dusk .world-scene__horizon-glow::before {
+  opacity: 1;
+}
+
+.atmosphere--night .world-scene__horizon-glow::after {
+  opacity: 1;
+}
+
+.atmosphere--day {
+  --ridge-back-top: #3b6174;
+  --ridge-back-bottom: #203f52;
+  --ridge-far-top: #285166;
+  --ridge-far-bottom: #133146;
+  --ridge-mid-top: #112c40;
+  --ridge-mid-bottom: #071a28;
+  --ridge-rim: rgba(234, 233, 211, 0.16);
+  --bird-opacity: 0.72;
+  --firefly-opacity: 0;
+  --forest-far: #0b2231;
+  --forest-mid: #071a27;
+  --forest-near: #05131d;
+  --ground-top: #0a1b20;
+  --ground-bottom: #040b11;
+  --ground-line: rgba(230, 230, 214, 0.12);
+  --field-line: rgba(234, 221, 186, 0.1);
+  --field-line-strong: rgba(248, 232, 192, 0.18);
+  --village: #0b1c27;
+  --village-line: rgba(236, 232, 214, 0.14);
+  --window-opacity: 0;
+  --shore-line: rgba(225, 238, 229, 0.18);
+  --shore: rgba(240, 245, 232, 0.28);
+  --water-top: #2b6375;
+  --water-bottom: #103244;
+  --ripple: rgba(229, 248, 244, 0.24);
+  --reflection: rgba(255, 220, 152, 0.24);
+  --reflection-opacity: 0.35;
+  --stream: rgba(93, 171, 182, 0.32);
+  --stream-light: rgba(241, 255, 251, 0.62);
+  --lane: rgba(156, 142, 108, 0.14);
+  --lane-light: rgba(244, 228, 187, 0.42);
+  --rock: #091923;
+  --rock-line: rgba(210, 215, 200, 0.18);
+  --grass: rgba(184, 190, 156, 0.34);
+  --haze: rgba(226, 211, 183, 0.22);
+  --mist: rgba(222, 226, 211, 0.22);
+  --mist-opacity: 0.55;
+  --cloud: rgba(248, 242, 226, 0.46);
+  --cloud-opacity: 0.55;
+  --star-opacity: 0;
+  --sun-x: 73%;
+  --sun-y: 15%;
+  --sun-size: 4.6rem;
+  --sun-opacity: 1;
+  --moon-opacity: 0;
+  --window-glow: #ffd18c;
+  --flock: rgba(244, 243, 224, 0.82);
+  --frame-tree: rgba(3, 14, 18, 0.97);
+  --frame-tree-soft: rgba(3, 14, 18, 0.84);
+}
+
+.atmosphere--dawn {
+  --ridge-back-top: #4b5d73;
+  --ridge-back-bottom: #314559;
+  --ridge-far-top: #3a4f64;
+  --ridge-far-bottom: #22374c;
+  --ridge-mid-top: #26384d;
+  --ridge-mid-bottom: #142337;
+  --ridge-rim: rgba(255, 216, 197, 0.2);
+  --bird-opacity: 0.38;
+  --firefly-opacity: 0;
+  --forest-far: #112535;
+  --forest-mid: #0b1c2a;
+  --forest-near: #07141f;
+  --ground-top: #0d1c25;
+  --ground-bottom: #050c14;
+  --ground-line: rgba(245, 217, 197, 0.1);
+  --field-line: rgba(255, 219, 195, 0.1);
+  --field-line-strong: rgba(255, 225, 204, 0.17);
+  --village: #10202e;
+  --village-line: rgba(255, 225, 204, 0.14);
+  --window-opacity: 0.22;
+  --shore-line: rgba(255, 223, 207, 0.17);
+  --shore: rgba(255, 229, 214, 0.27);
+  --water-top: #3b606a;
+  --water-bottom: #193443;
+  --ripple: rgba(255, 227, 208, 0.24);
+  --reflection: rgba(255, 201, 169, 0.27);
+  --reflection-opacity: 0.5;
+  --stream: rgba(154, 191, 187, 0.32);
+  --stream-light: rgba(255, 238, 226, 0.65);
+  --lane: rgba(178, 145, 119, 0.14);
+  --lane-light: rgba(255, 224, 194, 0.42);
+  --rock: #0a1a23;
+  --rock-line: rgba(210, 215, 200, 0.18);
+  --grass: rgba(205, 192, 165, 0.32);
+  --haze: rgba(255, 196, 170, 0.28);
+  --mist: rgba(238, 218, 212, 0.22);
+  --mist-opacity: 0.6;
+  --cloud: rgba(255, 213, 198, 0.48);
+  --cloud-opacity: 0.5;
+  --star-opacity: 0.22;
+  --sun-x: 16%;
+  --sun-y: 39%;
+  --sun-size: 5.4rem;
+  --sun-opacity: 0.96;
+  --moon-opacity: 0.12;
+  --moon-x: 14%;
+  --moon-y: 17%;
+  --moon-size: 3.2rem;
+  --window-glow: #ffd18c;
+  --flock: rgba(245, 237, 220, 0.8);
+  --frame-tree: rgba(4, 13, 19, 0.97);
+  --frame-tree-soft: rgba(4, 13, 19, 0.83);
+}
+
+.atmosphere--dusk {
+  --ridge-back-top: #534760;
+  --ridge-back-bottom: #3a3348;
+  --ridge-far-top: #3e3548;
+  --ridge-far-bottom: #262638;
+  --ridge-mid-top: #282a3e;
+  --ridge-mid-bottom: #131728;
+  --ridge-rim: rgba(255, 185, 139, 0.22);
+  --bird-opacity: 0.42;
+  --firefly-opacity: 0.14;
+  --forest-far: #1a1d2d;
+  --forest-mid: #111424;
+  --forest-near: #090d18;
+  --ground-top: #0f1320;
+  --ground-bottom: #05080f;
+  --ground-line: rgba(255, 196, 157, 0.1);
+  --field-line: rgba(250, 184, 136, 0.1);
+  --field-line-strong: rgba(255, 205, 166, 0.16);
+  --village: #181726;
+  --village-line: rgba(255, 207, 172, 0.14);
+  --window-opacity: 0.68;
+  --shore-line: rgba(255, 202, 171, 0.16);
+  --shore: rgba(255, 212, 183, 0.25);
+  --water-top: #4a5664;
+  --water-bottom: #1b2b3b;
+  --ripple: rgba(255, 207, 171, 0.23);
+  --reflection: rgba(255, 190, 124, 0.32);
+  --reflection-opacity: 0.7;
+  --stream: rgba(206, 157, 132, 0.3);
+  --stream-light: rgba(255, 223, 187, 0.65);
+  --lane: rgba(159, 118, 98, 0.15);
+  --lane-light: rgba(255, 207, 164, 0.43);
+  --rock: #0c1722;
+  --rock-line: rgba(210, 215, 200, 0.18);
+  --grass: rgba(189, 179, 157, 0.3);
+  --haze: rgba(255, 170, 127, 0.3);
+  --mist: rgba(235, 186, 171, 0.2);
+  --mist-opacity: 0.55;
+  --cloud: rgba(250, 188, 162, 0.4);
+  --cloud-opacity: 0.43;
+  --star-opacity: 0.44;
+  --sun-x: 84%;
+  --sun-y: 39%;
+  --sun-size: 5.7rem;
+  --sun-opacity: 0.88;
+  --moon-opacity: 0.04;
+  --moon-x: 86%;
+  --moon-y: 17%;
+  --moon-size: 3.3rem;
+  --window-glow: #ffd18c;
+  --flock: rgba(242, 225, 204, 0.7);
+  --frame-tree: rgba(3, 9, 14, 0.98);
+  --frame-tree-soft: rgba(3, 9, 14, 0.86);
+}
+
+.atmosphere--night {
+  --ridge-back-top: #1c3453;
+  --ridge-back-bottom: #10233b;
+  --ridge-far-top: #14253b;
+  --ridge-far-bottom: #0b1b2e;
+  --ridge-mid-top: #0b1a2c;
+  --ridge-mid-bottom: #06111e;
+  --ridge-rim: rgba(160, 201, 231, 0.18);
+  --bird-opacity: 0;
+  --firefly-opacity: 0.9;
+  --forest-far: #071320;
+  --forest-mid: #050d18;
+  --forest-near: #030912;
+  --ground-top: #040d15;
+  --ground-bottom: #02060b;
+  --ground-line: rgba(145, 188, 223, 0.11);
+  --field-line: rgba(141, 181, 216, 0.07);
+  --field-line-strong: rgba(154, 195, 227, 0.12);
+  --village: #07101b;
+  --village-line: rgba(160, 194, 223, 0.12);
+  --window-opacity: 1;
+  --shore-line: rgba(146, 191, 225, 0.2);
+  --shore: rgba(157, 201, 232, 0.28);
+  --water-top: #102b44;
+  --water-bottom: #061323;
+  --ripple: rgba(158, 206, 241, 0.2);
+  --reflection: rgba(172, 211, 240, 0.22);
+  --reflection-opacity: 0.85;
+  --stream: rgba(67, 120, 161, 0.34);
+  --stream-light: rgba(172, 218, 246, 0.55);
+  --lane: rgba(57, 77, 99, 0.18);
+  --lane-light: rgba(144, 176, 203, 0.3);
+  --rock: #050d15;
+  --rock-line: rgba(210, 215, 200, 0.16);
+  --grass: rgba(113, 152, 173, 0.26);
+  --haze: rgba(59, 103, 146, 0.18);
+  --mist: rgba(101, 144, 182, 0.16);
+  --mist-opacity: 0.55;
+  --cloud: rgba(132, 172, 208, 0.18);
+  --cloud-opacity: 0.28;
+  --star-opacity: 0.95;
+  --sun-x: 73%;
+  --sun-y: 15%;
+  --sun-size: 4.6rem;
+  --sun-opacity: 0;
+  --moon-opacity: 1;
+  --moon-x: 73%;
+  --moon-y: 14%;
+  --moon-size: 3.8rem;
+  --window-glow: #ffd18c;
+  --flock: rgba(196, 210, 210, 0.58);
+  --frame-tree: rgba(1, 5, 9, 0.99);
+  --frame-tree-soft: rgba(1, 5, 9, 0.9);
+}
+
+@media (max-width: 52rem) {
+  .atmosphere .world-scene__clouds {
+    translate: calc(var(--atmo-scroll) * -5vw) calc(var(--atmo-scroll) * 3vh);
+  }
+
+  .atmosphere .world-scene__clouds--near {
+    translate: calc(var(--atmo-scroll) * 3vw) calc(var(--atmo-scroll) * 2vh);
+  }
+
+  .atmosphere .world-scene__birds {
+    translate: calc(var(--atmo-scroll) * 7vw) calc(var(--atmo-scroll) * -2vh);
+  }
+
+  .atmosphere .world-scene__sun {
+    translate: calc(var(--atmo-scroll) * -6vw) calc(var(--atmo-scroll) * 7vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere .world-scene__clouds,
+  .atmosphere .world-scene__clouds--near,
+  .atmosphere .world-scene__birds,
+  .atmosphere .world-scene__sun,
+  .atmosphere .world-scene__moon,
+  .atmosphere .world-scene__horizon-glow {
+    translate: none;
+  }
+
+  .atmosphere .world-scene__grass-tuft,
+  .atmosphere .world-scene__pine,
+  .atmosphere .world-scene__frame-tree,
+  .atmosphere .world-scene__forest {
+    animation: none;
+  }
+}

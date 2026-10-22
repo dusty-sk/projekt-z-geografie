@@ -1,0 +1,90 @@
+/* ==========================================================================
+   Presentation mode — immersive live demonstration.
+   Every rule is scoped under html.is-presenting, so ordinary browsing is
+   completely untouched while the mode is off (see PresentationProvider, which
+   toggles the class on <html>).
+   ========================================================================== */
+
+html.is-presenting {
+  /* The bar is the only chrome; keep its height as the shared layout offset so
+     page headers, sticky filters and scroll padding all line up with it. */
+  --present-bar: 4.25rem;
+  --nav-h: var(--present-bar);
+
+  /* A little more canvas for a projector. */
+  --shell: 92rem;
+  --measure: 70ch;
+  --section-y: clamp(4rem, 7.5vw, 8.5rem);
+
+  /* Nudge the editorial scale up so body copy and headings read from the back
+     of a classroom without zooming the browser. */
+  --step--1: clamp(0.875rem, 0.84rem + 0.18vw, 1rem);
+  --step-0: clamp(1.02rem, 0.98rem + 0.28vw, 1.16rem);
+  --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.6rem, 1.44rem + 0.85vw, 2.1rem);
+  --step-3: clamp(2rem, 1.72rem + 1.35vw, 2.85rem);
+  --step-4: clamp(2.5rem, 1.95rem + 2.2vw, 4rem);
+  --step-5: clamp(3.2rem, 2.25rem + 3.9vw, 5.5rem);
+  --step-6: clamp(3.6rem, 2.35rem + 5.4vw, 7.4rem);
+}
+
+/* --- Strip the browsing chrome (the footer stays — it is part of the show) --- */
+
+html.is-presenting .skip-link,
+html.is-presenting .nav {
+  display: none;
+}
+
+/* --- Cinematic route / location transitions ------------------------------ */
+
+html.is-presenting .page-transition {
+  animation: present-in 620ms var(--ease-entrance) both;
+}
+
+@keyframes present-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.5rem, 0) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Projector-grade map surface ----------------------------------------- */
+
+html.is-presenting .map-page__head {
+  padding-top: calc(var(--nav-h) + clamp(2.5rem, 6vw, 4.5rem));
+}
+
+html.is-presenting .map-page__body {
+  grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+}
+
+html.is-presenting .map-page__map {
+  min-height: min(82svh, 60rem);
+}
+
+html.is-presenting .map-page__list {
+  max-height: min(82svh, 60rem);
+}
+
+/* --- Slightly larger imagery inside cards on a big screen ---------------- */
+
+html.is-presenting .place-row__media,
+html.is-presenting .teaser__media {
+  min-height: clamp(7rem, 3rem + 12vw, 11rem);
+}
+
+@media (max-width: 58rem) {
+  html.is-presenting .map-page__body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 48rem) {
+  html.is-presenting {
+    --present-bar: 3.9rem;
+  }
+}

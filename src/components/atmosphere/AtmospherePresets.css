@@ -1,0 +1,855 @@
+/* ==========================================================================
+   Atmosphere presets
+   Ten art-directed variations of the shared Detva landscape. The randomizer
+   assigns one per top-level section and keeps it stable for the session.
+   ========================================================================== */
+
+.atmosphere-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 2400ms var(--ease-in-out);
+}
+
+/* --------------------------------------------------------------------------
+   Aurora
+   -------------------------------------------------------------------------- */
+
+.atmosphere-fx--aurora {
+  z-index: 2;
+  background: radial-gradient(46% 40% at 46% 18%, rgba(37, 199, 154, 0.14), transparent 70%);
+  filter: blur(9px) saturate(1.25);
+  mix-blend-mode: screen;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 72%, transparent 96%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 72%, transparent 96%);
+  will-change: transform, opacity;
+}
+
+.atmosphere-fx--aurora span {
+  position: absolute;
+  display: block;
+  border-radius: 58% 42% 46% 54% / 72% 28% 72% 28%;
+  background:
+    repeating-linear-gradient(
+      101deg,
+      transparent 0 11px,
+      rgba(198, 255, 236, 0.16) 11px 12px,
+      transparent 12px 25px
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(54, 255, 186, 0.38) 22%,
+      rgba(86, 235, 255, 0.28) 48%,
+      rgba(172, 107, 255, 0.2) 70%,
+      transparent 100%
+    );
+  transform-origin: 50% 100%;
+  transform: rotate(var(--atmo-aurora-rotate)) skewX(-8deg) scaleY(0.92);
+  animation: atmo-aurora-drift 24s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.atmosphere-fx--aurora span:nth-child(1) {
+  --atmo-aurora-rotate: -13deg;
+  left: 4%;
+  top: -6%;
+  width: 29%;
+  height: 64%;
+  opacity: 0.92;
+}
+
+.atmosphere-fx--aurora span:nth-child(2) {
+  --atmo-aurora-rotate: -7deg;
+  left: 34%;
+  top: -2%;
+  width: 24%;
+  height: 56%;
+  opacity: 0.64;
+  animation-delay: -7s;
+  animation-duration: 31s;
+}
+
+.atmosphere-fx--aurora span:nth-child(3) {
+  --atmo-aurora-rotate: -16deg;
+  left: 61%;
+  top: -7%;
+  width: 31%;
+  height: 62%;
+  opacity: 0.48;
+  animation-delay: -14s;
+  animation-duration: 27s;
+}
+
+@keyframes atmo-aurora-drift {
+  from {
+    transform: translate3d(-3%, 0, 0) rotate(var(--atmo-aurora-rotate)) skewX(-10deg)
+      scaleY(0.82);
+  }
+  to {
+    transform: translate3d(4%, -2%, 0) rotate(calc(var(--atmo-aurora-rotate) + 7deg))
+      skewX(-6deg) scaleY(1.08);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Meteors
+   -------------------------------------------------------------------------- */
+
+.atmosphere-fx--meteors {
+  z-index: 2;
+  overflow: hidden;
+}
+
+.atmosphere-fx--meteors span {
+  position: absolute;
+  display: block;
+  width: clamp(5.5rem, 12vw, 11rem);
+  height: 2px;
+  border-radius: 999px;
+  opacity: 0;
+  background: linear-gradient(90deg, #ffffff 0%, rgba(218, 242, 255, 0.9) 27%, transparent 100%);
+  box-shadow:
+    0 0 0.6rem 0.1rem rgba(164, 216, 255, 0.4),
+    0 0 2rem 0.35rem rgba(96, 162, 255, 0.16);
+  transform-origin: left center;
+  animation: atmo-meteor 8s linear infinite;
+  animation-play-state: paused;
+}
+
+.atmosphere-fx--meteors span:nth-child(1) {
+  top: 13%;
+  left: 59%;
+  animation-delay: -1.4s;
+  animation-duration: 5.8s;
+}
+
+.atmosphere-fx--meteors span:nth-child(2) {
+  top: 23%;
+  left: 78%;
+  animation-delay: -4.8s;
+  animation-duration: 7.2s;
+}
+
+.atmosphere-fx--meteors span:nth-child(3) {
+  top: 8%;
+  left: 43%;
+  animation-delay: -7.1s;
+  animation-duration: 8.1s;
+}
+
+.atmosphere-fx--meteors span:nth-child(4) {
+  top: 31%;
+  left: 90%;
+  animation-delay: -2.9s;
+  animation-duration: 6.4s;
+}
+
+.atmosphere-fx--meteors span:nth-child(5) {
+  top: 18%;
+  left: 25%;
+  animation-delay: -6.2s;
+  animation-duration: 7.6s;
+}
+
+.atmosphere-fx--meteors span:nth-child(6) {
+  top: 36%;
+  left: 49%;
+  animation-delay: -5.3s;
+  animation-duration: 8.8s;
+}
+
+@keyframes atmo-meteor {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-31deg) scaleX(0.25);
+  }
+  3% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(-31deg) scaleX(1);
+  }
+  11% {
+    opacity: 0.82;
+    transform: translate3d(-19vw, 12vw, 0) rotate(-31deg) scaleX(1);
+  }
+  17% {
+    opacity: 0;
+    transform: translate3d(-25vw, 16vw, 0) rotate(-31deg) scaleX(0.7);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Storm
+   -------------------------------------------------------------------------- */
+
+.atmosphere-fx--storm {
+  z-index: 4;
+  opacity: 1;
+}
+
+.atmosphere-fx--storm::before,
+.atmosphere-fx--storm::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.atmosphere-fx--storm::before {
+  background:
+    radial-gradient(52% 38% at 34% 17%, rgba(220, 235, 255, 0.78), transparent 64%),
+    radial-gradient(26% 22% at 39% 25%, rgba(255, 255, 255, 0.5), transparent 68%);
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: atmo-lightning 11s linear infinite;
+  animation-play-state: paused;
+}
+
+.atmosphere-fx--storm::after {
+  background: repeating-linear-gradient(
+    103deg,
+    transparent 0 1.5rem,
+    rgba(174, 207, 255, 0.11) 1.5rem calc(1.5rem + 1px),
+    transparent calc(1.5rem + 1px) 3rem
+  );
+  opacity: 0.34;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 76%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 76%, transparent 100%);
+  animation: atmo-rain 0.9s linear infinite;
+  animation-play-state: paused;
+}
+
+@keyframes atmo-lightning {
+  0%,
+  90%,
+  93.2%,
+  100% {
+    opacity: 0;
+  }
+  90.5% {
+    opacity: 0.55;
+  }
+  91% {
+    opacity: 0.1;
+  }
+  91.8% {
+    opacity: 0.42;
+  }
+  92.4% {
+    opacity: 0;
+  }
+}
+
+@keyframes atmo-rain {
+  to {
+    background-position: -4.5rem 9rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   1. Zlatý svit
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="zlaty-svit"] .world-scene__sky-layer--dawn {
+  background:
+    radial-gradient(46% 36% at 19% 40%, rgba(255, 215, 154, 0.72), transparent 68%),
+    radial-gradient(58% 30% at 48% 48%, rgba(255, 186, 114, 0.22), transparent 74%),
+    linear-gradient(180deg, #071328 0%, #1b3152 26%, #5f556b 50%, #b06f5f 70%, #df995f 86%, #f4c77f 100%);
+}
+
+.atmosphere[data-bg="zlaty-svit"] {
+  --ridge-back-top: #4f5866;
+  --ridge-back-bottom: #2e3a4a;
+  --ridge-far-top: #3b4a58;
+  --ridge-far-bottom: #1e2e3d;
+  --ridge-mid-top: #253444;
+  --ridge-mid-bottom: #12202d;
+  --ridge-rim: rgba(255, 220, 177, 0.2);
+  --bird-opacity: 0.52;
+  --firefly-opacity: 0;
+  --forest-far: #152b35;
+  --forest-mid: #0c1e29;
+  --forest-near: #08151e;
+  --ground-top: #102023;
+  --ground-bottom: #050c11;
+  --ground-line: rgba(255, 223, 187, 0.12);
+  --field-line: rgba(255, 221, 175, 0.1);
+  --field-line-strong: rgba(255, 234, 195, 0.2);
+  --village: #12222d;
+  --village-line: rgba(255, 228, 196, 0.16);
+  --window-opacity: 0.4;
+  --shore-line: rgba(255, 225, 194, 0.2);
+  --shore: rgba(255, 236, 207, 0.34);
+  --water-top: #4e6d6d;
+  --water-bottom: #1a3440;
+  --ripple: rgba(255, 233, 200, 0.25);
+  --reflection: rgba(255, 196, 119, 0.4);
+  --reflection-opacity: 0.7;
+  --stream: rgba(198, 176, 132, 0.34);
+  --stream-light: rgba(255, 238, 210, 0.66);
+  --lane: rgba(164, 133, 93, 0.16);
+  --lane-light: rgba(255, 225, 178, 0.44);
+  --rock: #0c1a22;
+  --rock-line: rgba(230, 213, 184, 0.18);
+  --grass: rgba(196, 183, 145, 0.32);
+  --haze: rgba(255, 195, 136, 0.28);
+  --mist: rgba(255, 225, 197, 0.25);
+  --mist-opacity: 0.7;
+  --cloud: rgba(255, 224, 189, 0.48);
+  --cloud-opacity: 0.48;
+  --star-opacity: 0.12;
+  --sun-x: 19%;
+  --sun-y: 36%;
+  --sun-size: 6.4rem;
+  --sun-opacity: 1;
+  --moon-opacity: 0;
+  --window-glow: #ffd18c;
+  --flock: rgba(255, 240, 214, 0.8);
+  --frame-tree: rgba(4, 12, 16, 0.97);
+  --frame-tree-soft: rgba(4, 12, 16, 0.82);
+}
+
+/* --------------------------------------------------------------------------
+   2. Jasný deň
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="jasny-den"] .world-scene__sky-layer--day {
+  background:
+    radial-gradient(34% 30% at 75% 12%, rgba(255, 247, 204, 0.82), transparent 65%),
+    radial-gradient(48% 42% at 16% 36%, rgba(116, 193, 201, 0.18), transparent 72%),
+    linear-gradient(180deg, #082441 0%, #155b77 28%, #3c8e96 52%, #91b59d 72%, #dfc78d 90%, #f3d79d 100%);
+}
+
+.atmosphere[data-bg="jasny-den"] {
+  --ridge-back-top: #345d73;
+  --ridge-back-bottom: #1d4056;
+  --ridge-far-top: #1f4b62;
+  --ridge-far-bottom: #0f2d43;
+  --ridge-mid-top: #0e2a3d;
+  --ridge-mid-bottom: #061a26;
+  --ridge-rim: rgba(245, 238, 210, 0.18);
+  --bird-opacity: 0.8;
+  --firefly-opacity: 0;
+  --forest-far: #0a2732;
+  --forest-mid: #061b27;
+  --forest-near: #04131c;
+  --ground-top: #0b2026;
+  --ground-bottom: #040d12;
+  --water-top: #2f7281;
+  --water-bottom: #10384a;
+  --reflection-opacity: 0.3;
+  --window-opacity: 0;
+  --haze: rgba(236, 223, 190, 0.22);
+  --mist-opacity: 0.35;
+  --cloud: rgba(255, 249, 232, 0.52);
+  --cloud-opacity: 0.38;
+  --star-opacity: 0;
+  --sun-x: 76%;
+  --sun-y: 12%;
+  --sun-size: 5.2rem;
+  --sun-opacity: 1;
+  --moon-opacity: 0;
+  --frame-tree: rgba(2, 12, 17, 0.97);
+  --frame-tree-soft: rgba(2, 12, 17, 0.84);
+}
+
+/* --------------------------------------------------------------------------
+   3. Medený súmrak
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="medeny-sumrak"] .world-scene__sky-layer--dusk {
+  background:
+    radial-gradient(50% 42% at 82% 42%, rgba(255, 130, 68, 0.72), transparent 72%),
+    radial-gradient(46% 30% at 14% 43%, rgba(150, 89, 122, 0.18), transparent 74%),
+    linear-gradient(180deg, #080a1d 0%, #2a2244 28%, #613a51 52%, #aa4c42 75%, #dd7944 90%, #f3a45c 100%);
+}
+
+.atmosphere[data-bg="medeny-sumrak"] {
+  --ridge-back-top: #5a4a5a;
+  --ridge-back-bottom: #3c3144;
+  --ridge-far-top: #433542;
+  --ridge-far-bottom: #292534;
+  --ridge-mid-top: #2a2839;
+  --ridge-mid-bottom: #151625;
+  --ridge-rim: rgba(255, 192, 143, 0.24);
+  --bird-opacity: 0.46;
+  --firefly-opacity: 0.16;
+  --forest-far: #1a1e2b;
+  --forest-mid: #101421;
+  --forest-near: #090d16;
+  --ground-top: #121320;
+  --ground-bottom: #05070e;
+  --water-top: #4e5961;
+  --water-bottom: #1c2b38;
+  --reflection: rgba(255, 159, 97, 0.42);
+  --reflection-opacity: 0.85;
+  --window-opacity: 0.72;
+  --haze: rgba(255, 160, 109, 0.3);
+  --mist: rgba(238, 176, 154, 0.2);
+  --mist-opacity: 0.58;
+  --cloud: rgba(252, 183, 150, 0.44);
+  --cloud-opacity: 0.5;
+  --star-opacity: 0.3;
+  --sun-x: 87%;
+  --sun-y: 18%;
+  --sun-size: 5.9rem;
+  --sun-opacity: 0.96;
+  --moon-opacity: 0;
+  --window-glow: #ffd9a0;
+  --flock: rgba(244, 223, 197, 0.7);
+  --frame-tree: rgba(4, 8, 13, 0.98);
+  --frame-tree-soft: rgba(4, 8, 13, 0.86);
+}
+
+/* --------------------------------------------------------------------------
+   4. Hviezdna noc
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="hviezdna-noc"] .world-scene__sky-layer--night {
+  background:
+    radial-gradient(36% 32% at 73% 14%, rgba(150, 196, 236, 0.28), transparent 70%),
+    radial-gradient(70% 32% at 48% 78%, rgba(39, 100, 150, 0.12), transparent 78%),
+    linear-gradient(180deg, #01030a 0%, #041327 32%, #071d33 58%, #0a2a42 82%, #0e3650 100%);
+}
+
+.atmosphere[data-bg="hviezdna-noc"] {
+  --ridge-back-top: #1e3a5d;
+  --ridge-back-bottom: #112640;
+  --ridge-far-top: #152a43;
+  --ridge-far-bottom: #0b1d31;
+  --ridge-mid-top: #0c1d30;
+  --ridge-mid-bottom: #061321;
+  --ridge-rim: rgba(170, 210, 240, 0.2);
+  --bird-opacity: 0;
+  --firefly-opacity: 1;
+  --water-top: #12314c;
+  --water-bottom: #071628;
+  --ripple: rgba(158, 206, 241, 0.2);
+  --reflection: rgba(180, 218, 246, 0.26);
+  --reflection-opacity: 0.9;
+  --haze: rgba(64, 117, 164, 0.2);
+  --mist-opacity: 0.5;
+  --cloud-opacity: 0.2;
+  --star-opacity: 1;
+  --sun-opacity: 0;
+  --moon-x: 73%;
+  --moon-y: 14%;
+  --moon-size: 4.2rem;
+  --moon-opacity: 1;
+  --window-opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   5. Polárna žiara
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="polarna-ziara"] .world-scene__sky-layer--night {
+  background:
+    radial-gradient(55% 40% at 52% 22%, rgba(37, 188, 144, 0.2), transparent 72%),
+    radial-gradient(40% 34% at 78% 12%, rgba(96, 164, 255, 0.14), transparent 70%),
+    linear-gradient(180deg, #01050c 0%, #03141c 34%, #04212b 62%, #062f39 84%, #083b46 100%);
+}
+
+.atmosphere[data-bg="polarna-ziara"] {
+  --ridge-back-top: #17384a;
+  --ridge-back-bottom: #0e2738;
+  --ridge-far-top: #0e2b3a;
+  --ridge-far-bottom: #081e2b;
+  --ridge-mid-top: #071b26;
+  --ridge-mid-bottom: #041018;
+  --ridge-rim: rgba(122, 235, 204, 0.18);
+  --bird-opacity: 0;
+  --firefly-opacity: 0.55;
+  --forest-far: #06212a;
+  --forest-mid: #04171f;
+  --forest-near: #020c12;
+  --ground-top: #041318;
+  --ground-bottom: #02070b;
+  --water-top: #0f3d49;
+  --water-bottom: #061e2a;
+  --ripple: rgba(126, 238, 216, 0.18);
+  --reflection: rgba(118, 241, 208, 0.24);
+  --reflection-opacity: 0.65;
+  --stream: rgba(69, 161, 145, 0.32);
+  --stream-light: rgba(152, 255, 226, 0.5);
+  --haze: rgba(65, 196, 161, 0.17);
+  --mist: rgba(90, 185, 173, 0.16);
+  --mist-opacity: 0.45;
+  --cloud: rgba(139, 203, 208, 0.2);
+  --cloud-opacity: 0.2;
+  --star-opacity: 0.7;
+  --sun-opacity: 0;
+  --moon-x: 83%;
+  --moon-y: 13%;
+  --moon-size: 3rem;
+  --moon-opacity: 0.5;
+  --window-opacity: 0.9;
+  --frame-tree: rgba(1, 8, 10, 0.98);
+  --frame-tree-soft: rgba(1, 8, 10, 0.88);
+}
+
+.atmosphere[data-bg="polarna-ziara"] .atmosphere-fx--aurora {
+  opacity: 1;
+  visibility: visible;
+}
+
+.atmosphere[data-bg="polarna-ziara"] .atmosphere-fx--aurora span {
+  animation-play-state: running;
+}
+
+/* --------------------------------------------------------------------------
+   6. Hmlisté ráno
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="hmliste-rano"] .world-scene__sky-layer--dawn {
+  background:
+    radial-gradient(42% 32% at 24% 39%, rgba(255, 231, 190, 0.3), transparent 70%),
+    linear-gradient(180deg, #0a1420 0%, #1e2c38 30%, #4b5a60 54%, #7d837c 74%, #b8ad96 90%, #d5c6a8 100%);
+}
+
+.atmosphere[data-bg="hmliste-rano"] {
+  --ridge-back-top: #4a555a;
+  --ridge-back-bottom: #333e44;
+  --ridge-far-top: #39464c;
+  --ridge-far-bottom: #222e35;
+  --ridge-mid-top: #26333a;
+  --ridge-mid-bottom: #131d23;
+  --ridge-rim: rgba(235, 225, 201, 0.16);
+  --bird-opacity: 0.3;
+  --firefly-opacity: 0;
+  --forest-far: #1a2a2c;
+  --forest-mid: #111e22;
+  --forest-near: #0a1418;
+  --ground-top: #111e1e;
+  --ground-bottom: #060b0d;
+  --water-top: #4b5f60;
+  --water-bottom: #1d3035;
+  --reflection: rgba(255, 223, 176, 0.22);
+  --reflection-opacity: 0.35;
+  --window-opacity: 0.3;
+  --haze: rgba(238, 224, 197, 0.3);
+  --mist: rgba(239, 231, 215, 0.36);
+  --mist-opacity: 1;
+  --cloud: rgba(243, 236, 220, 0.58);
+  --cloud-opacity: 0.68;
+  --star-opacity: 0.05;
+  --sun-x: 24%;
+  --sun-y: 39%;
+  --sun-size: 5rem;
+  --sun-opacity: 0.62;
+  --moon-opacity: 0;
+  --flock: rgba(238, 233, 218, 0.65);
+  --frame-tree: rgba(7, 12, 13, 0.96);
+  --frame-tree-soft: rgba(7, 12, 13, 0.8);
+}
+
+.atmosphere[data-bg="hmliste-rano"] .world-scene__mist {
+  height: 18%;
+}
+
+.atmosphere[data-bg="hmliste-rano"] .world-scene__mist--far {
+  bottom: 27%;
+}
+
+.atmosphere[data-bg="hmliste-rano"] .world-scene__mist--near {
+  bottom: 12%;
+  height: 14%;
+}
+
+.atmosphere[data-bg="hmliste-rano"] .world-scene__haze {
+  opacity: 0.9;
+}
+
+/* --------------------------------------------------------------------------
+   7. Búrkové nebo
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="burkove-nebo"] .world-scene__sky-layer--dusk {
+  background:
+    radial-gradient(50% 40% at 34% 18%, rgba(120, 136, 190, 0.16), transparent 72%),
+    linear-gradient(180deg, #04060d 0%, #101326 28%, #232039 52%, #38283a 74%, #56353a 91%, #6a403e 100%);
+}
+
+.atmosphere[data-bg="burkove-nebo"] {
+  --ridge-back-top: #34313f;
+  --ridge-back-bottom: #22212f;
+  --ridge-far-top: #282634;
+  --ridge-far-bottom: #171824;
+  --ridge-mid-top: #181923;
+  --ridge-mid-bottom: #0b0c14;
+  --ridge-rim: rgba(180, 196, 230, 0.16);
+  --bird-opacity: 0;
+  --firefly-opacity: 0;
+  --forest-far: #12131d;
+  --forest-mid: #0a0b13;
+  --forest-near: #05060a;
+  --ground-top: #0b0c13;
+  --ground-bottom: #030409;
+  --ground-line: rgba(190, 205, 235, 0.1);
+  --field-line: rgba(180, 196, 235, 0.07);
+  --field-line-strong: rgba(190, 210, 245, 0.13);
+  --village: #0b0b13;
+  --village-line: rgba(190, 205, 235, 0.12);
+  --window-opacity: 0.75;
+  --shore-line: rgba(180, 205, 240, 0.16);
+  --shore: rgba(200, 225, 255, 0.23);
+  --water-top: #263343;
+  --water-bottom: #0b1420;
+  --ripple: rgba(180, 205, 240, 0.18);
+  --reflection: rgba(255, 207, 130, 0.18);
+  --reflection-opacity: 0.55;
+  --stream: rgba(112, 146, 184, 0.3);
+  --stream-light: rgba(206, 229, 255, 0.55);
+  --lane: rgba(90, 95, 120, 0.18);
+  --lane-light: rgba(186, 202, 230, 0.3);
+  --rock: #080b12;
+  --rock-line: rgba(200, 210, 235, 0.15);
+  --grass: rgba(135, 150, 170, 0.25);
+  --haze: rgba(96, 112, 158, 0.2);
+  --mist: rgba(120, 140, 180, 0.18);
+  --mist-opacity: 0.6;
+  --cloud: rgba(82, 92, 118, 0.55);
+  --cloud-opacity: 0.85;
+  --star-opacity: 0.18;
+  --sun-opacity: 0;
+  --moon-opacity: 0;
+  --flock: rgba(190, 200, 220, 0.4);
+  --frame-tree: rgba(2, 4, 7, 0.99);
+  --frame-tree-soft: rgba(2, 4, 7, 0.92);
+}
+
+.atmosphere[data-bg="burkove-nebo"] .atmosphere-fx--storm {
+  visibility: visible;
+}
+
+.atmosphere[data-bg="burkove-nebo"] .atmosphere-fx--storm::before,
+.atmosphere[data-bg="burkove-nebo"] .atmosphere-fx--storm::after {
+  animation-play-state: running;
+}
+
+/* --------------------------------------------------------------------------
+   8. Krvavý mesiac
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="krvavy-mesiac"] .world-scene__sky-layer--night {
+  background:
+    radial-gradient(34% 30% at 72% 14%, rgba(255, 124, 90, 0.34), transparent 68%),
+    radial-gradient(60% 36% at 50% 74%, rgba(128, 26, 34, 0.18), transparent 76%),
+    linear-gradient(180deg, #070206 0%, #160711 30%, #2b0b17 56%, #451221 80%, #5a1924 100%);
+}
+
+.atmosphere[data-bg="krvavy-mesiac"] {
+  --ridge-back-top: #4a2434;
+  --ridge-back-bottom: #2b1421;
+  --ridge-far-top: #371a28;
+  --ridge-far-bottom: #1e0d18;
+  --ridge-mid-top: #24101b;
+  --ridge-mid-bottom: #10060c;
+  --ridge-rim: rgba(255, 154, 126, 0.18);
+  --bird-opacity: 0;
+  --firefly-opacity: 1;
+  --forest-far: #1b0b12;
+  --forest-mid: #10060b;
+  --forest-near: #080307;
+  --ground-top: #10060a;
+  --ground-bottom: #050204;
+  --ground-line: rgba(255, 154, 126, 0.12);
+  --field-line: rgba(255, 138, 102, 0.08);
+  --field-line-strong: rgba(255, 170, 132, 0.13);
+  --village: #160912;
+  --village-line: rgba(255, 166, 130, 0.15);
+  --window-opacity: 0.9;
+  --shore-line: rgba(255, 158, 122, 0.2);
+  --shore: rgba(255, 183, 146, 0.28);
+  --water-top: #3c1a28;
+  --water-bottom: #160912;
+  --ripple: rgba(255, 166, 126, 0.2);
+  --reflection: rgba(255, 126, 82, 0.42);
+  --reflection-opacity: 1;
+  --stream: rgba(160, 74, 76, 0.34);
+  --stream-light: rgba(255, 182, 146, 0.6);
+  --lane: rgba(100, 55, 60, 0.2);
+  --lane-light: rgba(255, 170, 124, 0.4);
+  --rock: #0d0708;
+  --rock-line: rgba(255, 180, 150, 0.16);
+  --grass: rgba(160, 115, 105, 0.25);
+  --haze: rgba(180, 62, 52, 0.26);
+  --mist: rgba(195, 94, 80, 0.2);
+  --mist-opacity: 0.6;
+  --cloud: rgba(132, 64, 74, 0.35);
+  --cloud-opacity: 0.36;
+  --star-opacity: 0.45;
+  --sun-opacity: 0;
+  --moon-x: 72%;
+  --moon-y: 14%;
+  --moon-size: 4.8rem;
+  --moon-opacity: 1;
+  --window-glow: #ffbd78;
+  --flock: rgba(235, 190, 170, 0.48);
+  --frame-tree: rgba(5, 1, 3, 0.99);
+  --frame-tree-soft: rgba(5, 1, 3, 0.9);
+}
+
+.atmosphere[data-bg="krvavy-mesiac"] .world-scene__moon {
+  background: radial-gradient(circle at 36% 31%, #ffe0bb 0 16%, #f09972 42%, #c34e43 72%, #8e2b31 100%);
+  box-shadow:
+    0 0 1.8rem 0.35rem rgba(255, 120, 92, 0.24),
+    0 0 6rem 2.2rem rgba(176, 31, 44, 0.18);
+}
+
+.atmosphere[data-bg="krvavy-mesiac"] .world-scene__moon-crater {
+  background: rgba(104, 24, 34, 0.34);
+}
+
+.atmosphere[data-bg="krvavy-mesiac"] .world-scene__firefly {
+  background: #ffb36b;
+  box-shadow:
+    0 0 0.35rem 0.12rem rgba(255, 126, 74, 0.52),
+    0 0 1.3rem 0.45rem rgba(220, 48, 40, 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   9. Perlový súmrak
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="perlovy-sumrak"] .world-scene__sky-layer--dusk {
+  background:
+    radial-gradient(46% 38% at 27% 39%, rgba(255, 205, 191, 0.58), transparent 70%),
+    radial-gradient(48% 42% at 78% 30%, rgba(190, 167, 230, 0.2), transparent 72%),
+    linear-gradient(180deg, #0b0b1a 0%, #25223a 28%, #54445f 52%, #996d7a 74%, #cc9698 90%, #e8b9b0 100%);
+}
+
+.atmosphere[data-bg="perlovy-sumrak"] {
+  --ridge-back-top: #5a5064;
+  --ridge-back-bottom: #3d3749;
+  --ridge-far-top: #463e50;
+  --ridge-far-bottom: #2d2a3a;
+  --ridge-mid-top: #302d3e;
+  --ridge-mid-bottom: #1a1825;
+  --ridge-rim: rgba(255, 218, 206, 0.2);
+  --bird-opacity: 0.28;
+  --firefly-opacity: 0.12;
+  --forest-far: #1d1b2a;
+  --forest-mid: #131220;
+  --forest-near: #0b0a14;
+  --ground-top: #14131f;
+  --ground-bottom: #07060b;
+  --ground-line: rgba(255, 214, 205, 0.1);
+  --field-line: rgba(255, 207, 204, 0.08);
+  --field-line-strong: rgba(255, 225, 218, 0.15);
+  --village: #171523;
+  --village-line: rgba(255, 214, 205, 0.14);
+  --window-opacity: 0.6;
+  --shore-line: rgba(255, 214, 207, 0.17);
+  --shore: rgba(255, 228, 220, 0.26);
+  --water-top: #4d4c60;
+  --water-bottom: #1d2033;
+  --ripple: rgba(255, 219, 210, 0.22);
+  --reflection: rgba(255, 190, 170, 0.32);
+  --reflection-opacity: 0.62;
+  --stream: rgba(174, 147, 152, 0.3);
+  --stream-light: rgba(255, 226, 216, 0.6);
+  --lane: rgba(150, 116, 110, 0.15);
+  --lane-light: rgba(255, 221, 203, 0.38);
+  --rock: #0b0b14;
+  --rock-line: rgba(230, 214, 220, 0.16);
+  --grass: rgba(185, 169, 170, 0.26);
+  --haze: rgba(255, 195, 185, 0.25);
+  --mist: rgba(232, 209, 213, 0.22);
+  --mist-opacity: 0.65;
+  --cloud: rgba(251, 207, 201, 0.42);
+  --cloud-opacity: 0.42;
+  --star-opacity: 0.22;
+  --sun-x: 27%;
+  --sun-y: 38%;
+  --sun-size: 5.6rem;
+  --sun-opacity: 0.82;
+  --moon-opacity: 0.06;
+  --flock: rgba(244, 226, 214, 0.62);
+  --frame-tree: rgba(4, 4, 8, 0.98);
+  --frame-tree-soft: rgba(4, 4, 8, 0.86);
+}
+
+/* --------------------------------------------------------------------------
+   10. Meteorická noc
+   -------------------------------------------------------------------------- */
+
+.atmosphere[data-bg="meteoricka-noc"] .world-scene__sky-layer--night {
+  background:
+    radial-gradient(45% 30% at 60% 18%, rgba(84, 126, 191, 0.12), transparent 72%),
+    linear-gradient(180deg, #010208 0%, #030d1d 32%, #061a2c 60%, #09263a 82%, #0b3046 100%);
+}
+
+.atmosphere[data-bg="meteoricka-noc"] {
+  --ridge-back-top: #183048;
+  --ridge-back-bottom: #0d1e31;
+  --ridge-far-top: #102439;
+  --ridge-far-bottom: #081828;
+  --ridge-mid-top: #081827;
+  --ridge-mid-bottom: #040e18;
+  --ridge-rim: rgba(146, 190, 232, 0.19);
+  --bird-opacity: 0;
+  --firefly-opacity: 0.6;
+  --forest-far: #061421;
+  --forest-mid: #040d17;
+  --forest-near: #020810;
+  --ground-top: #030b12;
+  --ground-bottom: #010409;
+  --water-top: #0e2c44;
+  --water-bottom: #05131f;
+  --reflection-opacity: 0.9;
+  --haze: rgba(69, 112, 155, 0.18);
+  --mist-opacity: 0.4;
+  --cloud: rgba(124, 164, 200, 0.16);
+  --cloud-opacity: 0.18;
+  --star-opacity: 1;
+  --sun-opacity: 0;
+  --moon-opacity: 0;
+  --window-opacity: 1;
+}
+
+.atmosphere[data-bg="meteoricka-noc"] .atmosphere-fx--meteors {
+  opacity: 1;
+  visibility: visible;
+}
+
+.atmosphere[data-bg="meteoricka-noc"] .atmosphere-fx--meteors span {
+  animation-play-state: running;
+}
+
+@media (max-width: 52rem) {
+  .atmosphere-fx--aurora {
+    filter: blur(12px) saturate(1.1);
+  }
+
+  .atmosphere-fx--aurora span:nth-child(3) {
+    display: none;
+  }
+
+  .atmosphere-fx--meteors span {
+    width: clamp(4.5rem, 20vw, 8rem);
+  }
+
+  .atmosphere-fx--storm::after {
+    opacity: 0.24;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere-fx--aurora span,
+  .atmosphere-fx--meteors span,
+  .atmosphere-fx--storm::before,
+  .atmosphere-fx--storm::after {
+    animation: none;
+  }
+
+  .atmosphere[data-bg="meteoricka-noc"] .atmosphere-fx--meteors span:nth-child(1),
+  .atmosphere[data-bg="meteoricka-noc"] .atmosphere-fx--meteors span:nth-child(2) {
+    opacity: 0.7;
+    transform: rotate(-31deg);
+  }
+}

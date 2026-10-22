@@ -1,0 +1,969 @@
+.world-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #071226;
+  isolation: isolate;
+}
+
+.world-scene__sky,
+.world-scene__milky,
+.world-scene__stars,
+.world-scene__clouds,
+.world-scene__sun,
+.world-scene__moon,
+.world-scene__horizon-glow,
+.world-scene__birds,
+.world-scene__terrain,
+.world-scene__haze,
+.world-scene__mist,
+.world-scene__landmarks,
+.world-scene__framing,
+.world-scene__fireflies,
+.world-scene__vignette,
+.world-scene__grain {
+  position: absolute;
+  inset: 0;
+}
+
+.world-scene__sky {
+  z-index: 0;
+}
+
+.world-scene__sky-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 2400ms var(--ease-in-out);
+}
+
+.world-scene__sky-layer--dawn {
+  background:
+    radial-gradient(44% 34% at 17% 36%, rgba(255, 190, 158, 0.52), transparent 70%),
+    radial-gradient(65% 26% at 48% 48%, rgba(255, 213, 186, 0.16), transparent 74%),
+    linear-gradient(180deg, #08142d 0%, #1c2d4a 28%, #4c4f68 51%, #9e6e72 72%, #d99b7a 88%, #edb482 100%);
+}
+
+.world-scene__sky-layer--day {
+  background:
+    radial-gradient(35% 30% at 73% 14%, rgba(255, 245, 205, 0.72), transparent 68%),
+    radial-gradient(50% 50% at 18% 36%, rgba(138, 197, 210, 0.22), transparent 72%),
+    linear-gradient(180deg, #0c2d4b 0%, #1a5571 28%, #4a8a96 52%, #93ab9b 72%, #d5c08d 90%, #ebcb91 100%);
+}
+
+.world-scene__sky-layer--dusk {
+  background:
+    radial-gradient(48% 40% at 84% 43%, rgba(255, 155, 96, 0.62), transparent 73%),
+    radial-gradient(44% 30% at 18% 40%, rgba(147, 107, 135, 0.18), transparent 74%),
+    linear-gradient(180deg, #070d24 0%, #242747 30%, #5b3f59 55%, #a85a4e 78%, #d9875d 92%, #eba270 100%);
+}
+
+.world-scene__sky-layer--night {
+  background:
+    radial-gradient(30% 26% at 75% 14%, rgba(144, 190, 230, 0.2), transparent 72%),
+    radial-gradient(70% 30% at 50% 72%, rgba(52, 104, 150, 0.1), transparent 78%),
+    linear-gradient(180deg, #01030b 0%, #041022 32%, #071a2f 58%, #0a253b 82%, #0e3046 100%);
+}
+
+.world--dawn .world-scene__sky-layer--dawn,
+.world--day .world-scene__sky-layer--day,
+.world--dusk .world-scene__sky-layer--dusk,
+.world--night .world-scene__sky-layer--night {
+  opacity: 1;
+}
+
+.world-scene__milky {
+  z-index: 1;
+  background: linear-gradient(
+    113deg,
+    transparent 35%,
+    rgba(153, 191, 231, 0.035) 44%,
+    rgba(204, 225, 248, 0.09) 51%,
+    rgba(153, 191, 231, 0.035) 58%,
+    transparent 68%
+  );
+  opacity: var(--star-opacity);
+  transition: opacity 2400ms var(--ease-in-out);
+}
+
+.world-scene__stars {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  opacity: var(--star-opacity);
+  fill: #dcecff;
+  transition: opacity 2400ms var(--ease-in-out);
+}
+
+.world-scene__star {
+  fill: #dcecff;
+}
+
+.world-scene__star.is-twinkle {
+  animation: world-star-twinkle 7s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.world--night .world-scene__star.is-twinkle {
+  animation-play-state: running;
+}
+
+.world-scene__star-cross {
+  fill: none;
+  stroke: rgba(215, 234, 255, 0.56);
+  stroke-width: 0.8;
+}
+
+@keyframes world-star-twinkle {
+  0%,
+  100% {
+    opacity: 0.24;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.world-scene__clouds {
+  z-index: 3;
+  left: -7%;
+  right: -7%;
+  top: 4%;
+  height: 25%;
+  opacity: var(--cloud-opacity);
+  filter: blur(0.6px);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 72%, transparent 100%);
+  transition: opacity 2400ms var(--ease-in-out);
+  will-change: transform;
+}
+
+.world-scene__clouds svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.world-scene__clouds path {
+  fill: var(--cloud);
+  transition: fill 2400ms var(--ease-in-out);
+}
+
+.world-scene__clouds--back {
+  animation: world-cloud-back 92s ease-in-out infinite alternate;
+}
+
+.world-scene__clouds--near {
+  top: 16%;
+  height: 18%;
+  opacity: calc(var(--cloud-opacity) * 0.58);
+  animation: world-cloud-near 68s ease-in-out infinite alternate;
+}
+
+@keyframes world-cloud-back {
+  from {
+    transform: translate3d(-1.8%, 0, 0);
+  }
+  to {
+    transform: translate3d(2.2%, 0, 0);
+  }
+}
+
+@keyframes world-cloud-near {
+  from {
+    transform: translate3d(2%, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 0, 0);
+  }
+}
+
+.world-scene__sun,
+.world-scene__moon {
+  position: absolute;
+  left: var(--sun-x);
+  top: var(--sun-y);
+  z-index: 4;
+  width: var(--sun-size);
+  height: var(--sun-size);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    left 2600ms var(--ease-in-out),
+    top 2600ms var(--ease-in-out),
+    width 2600ms var(--ease-in-out),
+    height 2600ms var(--ease-in-out),
+    opacity 2600ms var(--ease-in-out);
+}
+
+.world-scene__sun {
+  opacity: var(--sun-opacity);
+  background: radial-gradient(circle at 38% 34%, #fff9e5 0 20%, #ffeca9 42%, #f9bd73 73%, #ef9860 100%);
+  box-shadow:
+    0 0 1.8rem 0.35rem rgba(255, 218, 151, 0.22),
+    0 0 6rem 2.2rem rgba(255, 180, 104, 0.14);
+}
+
+.world-scene__moon {
+  left: var(--moon-x);
+  top: var(--moon-y);
+  width: var(--moon-size);
+  height: var(--moon-size);
+  opacity: var(--moon-opacity);
+  background: radial-gradient(circle at 36% 31%, #f8fbff 0 18%, #dbe9f5 48%, #aec8df 100%);
+  box-shadow:
+    0 0 1.6rem 0.35rem rgba(173, 207, 237, 0.16),
+    0 0 5.5rem 2rem rgba(126, 170, 217, 0.1);
+}
+
+.world-scene__moon-crater {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background: rgba(101, 139, 173, 0.16);
+}
+
+.world-scene__moon-crater--a {
+  left: 28%;
+  top: 27%;
+  width: 22%;
+  height: 17%;
+}
+
+.world-scene__moon-crater--b {
+  left: 57%;
+  top: 45%;
+  width: 14%;
+  height: 12%;
+}
+
+.world-scene__moon-crater--c {
+  left: 40%;
+  top: 65%;
+  width: 10%;
+  height: 9%;
+}
+
+.world-scene__horizon-glow {
+  z-index: 5;
+  pointer-events: none;
+}
+
+.world-scene__horizon-glow::before,
+.world-scene__horizon-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 2400ms var(--ease-in-out);
+}
+
+.world-scene__horizon-glow::before {
+  background:
+    radial-gradient(58rem 18rem at 74% 51%, rgba(255, 183, 113, 0.24), transparent 67%),
+    radial-gradient(34rem 12rem at 17% 52%, rgba(255, 200, 177, 0.12), transparent 72%);
+}
+
+.world-scene__horizon-glow::after {
+  background:
+    radial-gradient(48rem 16rem at 75% 50%, rgba(124, 171, 214, 0.14), transparent 70%),
+    radial-gradient(30rem 12rem at 18% 53%, rgba(103, 152, 196, 0.09), transparent 72%);
+}
+
+.world--dawn .world-scene__horizon-glow::before,
+.world--day .world-scene__horizon-glow::before,
+.world--dusk .world-scene__horizon-glow::before {
+  opacity: 1;
+}
+
+.world--night .world-scene__horizon-glow::after {
+  opacity: 1;
+}
+
+.world-scene__birds {
+  z-index: 5;
+  height: 47%;
+  bottom: auto;
+  opacity: var(--bird-opacity);
+  fill: none;
+  stroke: var(--flock);
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  pointer-events: none;
+  transition: opacity 2400ms var(--ease-in-out);
+}
+
+.world-scene__bird-flock {
+  animation: world-birds-drift 34s ease-in-out infinite alternate;
+}
+
+@keyframes world-birds-drift {
+  from {
+    transform: translateX(-12px);
+  }
+  to {
+    transform: translateX(20px);
+  }
+}
+
+.world-scene__terrain {
+  z-index: 6;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.world-scene__ridge {
+  stroke: var(--ridge-rim);
+  stroke-width: 0.65;
+  vector-effect: non-scaling-stroke;
+  transition:
+    fill 2400ms var(--ease-in-out),
+    stroke 2400ms var(--ease-in-out);
+}
+
+.world-scene__terrain stop {
+  transition: stop-color 2400ms var(--ease-in-out);
+}
+
+.world-scene__ridge--back {
+  fill: url(#world-ridge-back);
+}
+
+.world-scene__ridge--far,
+.world-scene__ridge--shoulder {
+  fill: url(#world-ridge-far);
+}
+
+.world-scene__ridge--mid {
+  fill: url(#world-ridge-mid);
+}
+
+.world-scene__ridge--shoulder {
+  stroke: var(--ridge-rim);
+  stroke-width: 0.9;
+}
+
+.world-scene__ridge-lines {
+  fill: none;
+  stroke: var(--ridge-rim);
+  stroke-width: 0.7;
+  opacity: 0.7;
+  vector-effect: non-scaling-stroke;
+}
+
+.world-scene__forest {
+  transition: fill 2400ms var(--ease-in-out);
+}
+
+.world-scene__forest--far {
+  fill: var(--forest-far);
+}
+
+.world-scene__forest--mid {
+  fill: var(--forest-mid);
+}
+
+.world-scene__forest--near {
+  fill: var(--forest-near);
+}
+
+.world-scene__fields path {
+  fill: none;
+  stroke: var(--field-line);
+  stroke-width: 0.7;
+  vector-effect: non-scaling-stroke;
+}
+
+.world-scene__fields path:last-child {
+  stroke: var(--field-line-strong);
+}
+
+.world-scene__village path {
+  fill: var(--village);
+  stroke: var(--village-line);
+  stroke-width: 0.7;
+  vector-effect: non-scaling-stroke;
+}
+
+.world-scene__village .world-scene__window {
+  fill: var(--window-glow);
+  stroke: none;
+  opacity: var(--window-opacity);
+  transition: opacity 2400ms var(--ease-in-out);
+}
+
+.world-scene__lake {
+  fill: url(#world-lake);
+  stroke: var(--shore-line);
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+
+.world-scene__shore {
+  fill: none;
+  stroke: var(--shore);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.world-scene__ripples path {
+  fill: none;
+  stroke: var(--ripple);
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+.world-scene__reflection {
+  fill: var(--reflection);
+  opacity: var(--reflection-opacity);
+}
+
+.world-scene__stream {
+  fill: none;
+  stroke: var(--stream);
+  stroke-width: 11;
+  stroke-linecap: round;
+}
+
+.world-scene__stream-light {
+  fill: none;
+  stroke: var(--stream-light);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  opacity: 0.75;
+}
+
+.world-scene__ground {
+  fill: url(#world-ground);
+  stroke: var(--ground-line);
+  stroke-width: 0.7;
+  vector-effect: non-scaling-stroke;
+}
+
+.world-scene__lane {
+  fill: none;
+  stroke: var(--lane);
+  stroke-width: 13;
+  stroke-linecap: round;
+}
+
+.world-scene__lane-light {
+  fill: none;
+  stroke: var(--lane-light);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-dasharray: 1 10;
+  opacity: 0.6;
+}
+
+.world-scene__scatter path {
+  fill: var(--rock);
+  stroke: var(--rock-line);
+  stroke-width: 0.7;
+  vector-effect: non-scaling-stroke;
+}
+
+.world-scene__meadow path {
+  fill: none;
+  stroke: var(--field-line);
+  stroke-width: 0.7;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.8;
+}
+
+.world-scene__grass {
+  fill: none;
+  stroke: var(--grass);
+  stroke-width: 0.75;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.72;
+}
+
+.world-scene__haze {
+  z-index: 7;
+  top: 37%;
+  height: 33%;
+  inset-inline: 0;
+  bottom: auto;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--haze) 35%,
+    var(--haze) 57%,
+    transparent 100%
+  );
+  opacity: 0.64;
+  mix-blend-mode: screen;
+  transition: background 2400ms var(--ease-in-out);
+}
+
+.world-scene__mist {
+  z-index: 8;
+  left: -12%;
+  right: -12%;
+  height: 11%;
+  inset-block: auto;
+  background: radial-gradient(58% 100% at 50% 50%, var(--mist), transparent 72%);
+  opacity: var(--mist-opacity);
+  transition: opacity 2400ms var(--ease-in-out);
+  will-change: transform;
+}
+
+.world-scene__mist--far {
+  bottom: 36%;
+  animation: world-mist-far 42s ease-in-out infinite alternate;
+}
+
+.world-scene__mist--near {
+  bottom: 22%;
+  height: 8%;
+  opacity: calc(var(--mist-opacity) * 0.7);
+  animation: world-mist-near 31s ease-in-out infinite alternate;
+}
+
+@keyframes world-mist-far {
+  from {
+    transform: translate3d(-2.5%, 0, 0);
+  }
+  to {
+    transform: translate3d(2.5%, 0, 0);
+  }
+}
+
+@keyframes world-mist-near {
+  from {
+    transform: translate3d(2%, 0, 0);
+  }
+  to {
+    transform: translate3d(-3%, 0, 0);
+  }
+}
+
+.world-scene__landmarks {
+  z-index: 9;
+  pointer-events: none;
+}
+
+.world-landmark {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  filter: drop-shadow(0 14px 18px rgba(1, 3, 8, 0.26));
+}
+
+.world-landmark svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.world-landmark--tichy-pastier {
+  width: clamp(7.5rem, 13vw, 13rem);
+}
+
+.world-landmark--bystry-had {
+  width: clamp(7rem, 11vw, 11rem);
+}
+
+.world-landmark--skalny-vtak {
+  width: clamp(10rem, 18vw, 17rem);
+}
+
+.world-landmark--machovy-chodec {
+  width: clamp(10rem, 17vw, 16rem);
+}
+
+.world-landmark--dreveny-svedok {
+  width: clamp(8rem, 13vw, 13rem);
+}
+
+.world-landmark__shadow {
+  fill: rgba(1, 4, 9, 0.36);
+}
+
+.world-landmark__wall {
+  fill: var(--hut-wall);
+  stroke: var(--hut-line);
+  stroke-width: 1.1;
+}
+
+.world-landmark__roof {
+  fill: var(--hut-roof);
+  stroke: var(--hut-line);
+  stroke-width: 1.1;
+}
+
+.world-landmark__roof-line,
+.world-landmark__cliff-line,
+.world-landmark__strata,
+.world-landmark__log-line,
+.world-landmark__log-ring {
+  fill: none;
+  stroke: var(--landmark-line);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.world-landmark__door {
+  fill: var(--hut-door);
+}
+
+.world-landmark__window {
+  fill: var(--window-glow);
+  opacity: var(--window-opacity);
+  transition: opacity 2400ms var(--ease-in-out);
+}
+
+.world-landmark__chimney {
+  fill: var(--hut-roof);
+  stroke: var(--hut-line);
+  stroke-width: 1;
+}
+
+.world-landmark__fence path {
+  stroke: var(--fence);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.world-landmark__flock path {
+  fill: var(--flock);
+  stroke: var(--flock-line);
+  stroke-width: 0.7;
+}
+
+.world-landmark__dog,
+.world-landmark__serpent,
+.world-landmark__walker {
+  opacity: 0;
+  transition: opacity 900ms var(--ease-out);
+}
+
+.world-landmark__dog path {
+  fill: var(--creature);
+}
+
+.world-landmark__serpent {
+  stroke: var(--creature-water);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.world-landmark__walker path {
+  fill: var(--creature);
+}
+
+.world__stage[data-found~="tichy-pastier"] .world-landmark__dog,
+.world__stage[data-found~="bystry-had"] .world-landmark__serpent,
+.world__stage[data-found~="machovy-chodec"] .world-landmark__walker {
+  opacity: 0.72;
+}
+
+.world-landmark__cliff {
+  fill: var(--cliff);
+  stroke: var(--cliff-line);
+  stroke-width: 1;
+}
+
+.world-landmark__water {
+  fill: var(--waterfall);
+  opacity: 0.72;
+}
+
+.world-landmark__water-line {
+  fill: none;
+  stroke: var(--waterfall-light);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+
+.world-landmark__pool {
+  fill: var(--water-bottom);
+  stroke: var(--water-line);
+  stroke-width: 1;
+}
+
+.world-landmark__ripple {
+  fill: none;
+  stroke: var(--water-line);
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+
+.world-landmark__rock {
+  fill: var(--rock);
+  stroke: var(--rock-line);
+  stroke-width: 0.8;
+}
+
+.world-landmark__spray {
+  fill: none;
+  stroke: var(--spray);
+  stroke-width: 0.8;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+
+.world-landmark__crag {
+  fill: var(--rock);
+  stroke: var(--rock-line);
+  stroke-width: 1;
+}
+
+.world-landmark__crag-light {
+  fill: none;
+  stroke: var(--rock-light);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+
+.world-landmark__moss {
+  fill: var(--moss);
+  stroke: var(--moss-line);
+  stroke-width: 0.8;
+}
+
+.world-landmark__bird {
+  fill: var(--creature);
+  stroke: var(--landmark-line);
+  stroke-width: 0.8;
+}
+
+.world__stage[data-found~="skalny-vtak"] .world-landmark__bird {
+  transform: translateY(-2px);
+}
+
+.world-landmark__fern,
+.world-landmark__seedling,
+.world-landmark__grass {
+  fill: none;
+  stroke: var(--fern);
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+
+.world-landmark__trunk,
+.world-landmark__log {
+  fill: var(--trunk);
+  stroke: var(--trunk-line);
+  stroke-width: 0.9;
+}
+
+.world-landmark__trunk-light {
+  fill: none;
+  stroke: var(--trunk-light);
+  stroke-width: 0.8;
+  stroke-linecap: round;
+}
+
+.world-landmark__root {
+  fill: none;
+  stroke: var(--trunk);
+  stroke-width: 2.1;
+  stroke-linecap: round;
+}
+
+.world-landmark__knoll {
+  fill: var(--knoll);
+  stroke: var(--knoll-line);
+  stroke-width: 0.8;
+}
+
+.world-landmark__cross path {
+  fill: none;
+  stroke: var(--wood);
+  stroke-width: 2.5;
+  stroke-linecap: square;
+}
+
+.world-landmark__cross--center path:first-child {
+  stroke-width: 3.2;
+}
+
+.world-landmark__fourth {
+  opacity: 0;
+  transition: opacity 900ms var(--ease-out);
+}
+
+.world-landmark__fourth path {
+  fill: none;
+  stroke: var(--wood);
+  stroke-width: 1.4;
+  stroke-linecap: square;
+}
+
+.world__stage[data-found~="dreveny-svedok"] .world-landmark__fourth {
+  opacity: 0.4;
+}
+
+.world-scene__framing {
+  z-index: 10;
+  pointer-events: none;
+}
+
+.world-scene__frame-pine {
+  position: absolute;
+  bottom: -7%;
+  height: auto;
+  opacity: 0.82;
+  filter: drop-shadow(0 18px 30px rgba(1, 3, 8, 0.3));
+}
+
+.world-scene__frame-pine--left {
+  left: -9%;
+  width: clamp(9rem, 15vw, 15rem);
+}
+
+.world-scene__frame-pine--right {
+  right: -8%;
+  width: clamp(8.5rem, 13vw, 14rem);
+  opacity: 0.76;
+}
+
+.world-scene__pine {
+  fill: var(--frame-tree);
+}
+
+.world-scene__frame-tree {
+  position: absolute;
+  bottom: -1.5%;
+  height: auto;
+  opacity: 0.94;
+}
+
+.world-scene__frame-tree--left {
+  left: -4%;
+  width: clamp(9rem, 20vw, 20rem);
+}
+
+.world-scene__frame-tree--right {
+  right: -4%;
+  width: clamp(8rem, 18vw, 18rem);
+  opacity: 0.86;
+}
+
+.world-scene__frame-trunk {
+  fill: none;
+  stroke: var(--frame-tree);
+  stroke-width: 6.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.world-scene__frame-branch {
+  fill: none;
+  stroke: var(--frame-tree);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.world-scene__frame-needles,
+.world-scene__frame-leaves {
+  fill: none;
+  stroke: var(--frame-tree-soft);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.world-scene__fireflies {
+  z-index: 10;
+  pointer-events: none;
+  opacity: var(--firefly-opacity);
+  transition: opacity 2400ms var(--ease-in-out);
+}
+
+.world-scene__firefly {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background: #ecffc9;
+  box-shadow:
+    0 0 0.35rem 0.12rem rgba(204, 255, 158, 0.42),
+    0 0 1.15rem 0.38rem rgba(148, 229, 114, 0.16);
+  animation-name: world-firefly;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes world-firefly {
+  0% {
+    opacity: 0.08;
+    transform: translate3d(0, 0, 0) scale(0.7);
+  }
+  42% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0.2;
+    transform: translate3d(0.4rem, -0.9rem, 0) scale(1.1);
+  }
+}
+
+.world-scene__vignette {
+  z-index: 11;
+  pointer-events: none;
+  background:
+    radial-gradient(118% 108% at 50% 42%, transparent 48%, rgba(1, 3, 8, 0.56) 100%),
+    linear-gradient(180deg, rgba(2, 5, 11, 0.24) 0%, transparent 17%, transparent 68%, rgba(2, 5, 11, 0.58) 100%);
+}
+
+.world-scene__grain {
+  z-index: 12;
+  pointer-events: none;
+  opacity: 0.11;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+@media (max-width: 52rem) {
+  .world-scene__frame-pine--left {
+    left: -14%;
+    width: 9rem;
+    opacity: 0.68;
+  }
+
+  .world-scene__frame-pine--right {
+    right: -13%;
+    width: 8rem;
+    opacity: 0.64;
+  }
+
+  .world-scene__frame-tree--left {
+    left: -10%;
+    width: 11rem;
+    opacity: 0.68;
+  }
+
+  .world-scene__frame-tree--right {
+    right: -10%;
+    width: 10rem;
+    opacity: 0.62;
+  }
+
+  .world-landmark__crag-light,
+  .world-landmark__strata,
+  .world-landmark__cliff-line {
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 34rem) {
+  .world-scene__frame-pine {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world-scene__clouds,
+  .world-scene__mist,
+  .world-scene__bird-flock,
+  .world-scene__firefly,
+  .world-scene__star.is-twinkle {
+    animation: none;
+  }
+}

@@ -1,0 +1,764 @@
+.world-page {
+  position: relative;
+  padding-bottom: clamp(1rem, 3vw, 2rem);
+}
+
+.world-page__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+  padding-top: calc(var(--nav-h) + clamp(3.25rem, 8vw, 6.5rem));
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.world-page__intro-main {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.world-page__title {
+  max-width: 12ch;
+  font-size: clamp(3.2rem, 7.8vw, 7.7rem);
+  line-height: 0.89;
+  letter-spacing: -0.052em;
+  background: linear-gradient(180deg, #fffdf7 0%, #edf7f3 59%, #a9d6cd 126%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.world-page__title em {
+  font-style: italic;
+  color: inherit;
+}
+
+.world-page__intro-side {
+  display: grid;
+  gap: 1.15rem;
+  max-width: 34rem;
+  justify-self: end;
+  padding-bottom: 0.4rem;
+}
+
+.world-page__time-note {
+  max-width: 29rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--paper-56);
+}
+
+.world-page__coord {
+  margin-top: 0.2rem;
+}
+
+.world {
+  --landmark-line: rgba(235, 232, 214, 0.16);
+  --rock-line: rgba(210, 215, 200, 0.18);
+  --window-glow: #ffd18c;
+  --waterfall-light: #f2fffb;
+  --creature-water: #a6ece2;
+  --frame-tree: rgba(2, 8, 12, 0.96);
+  --frame-tree-soft: rgba(2, 8, 12, 0.82);
+  --anchor-halo: rgba(99, 211, 196, 0.24);
+  --anchor-line: rgba(240, 245, 235, 0.72);
+  --moon-x: 74%;
+  --moon-y: 15%;
+  --moon-size: 3.7rem;
+  position: relative;
+  isolation: isolate;
+  border-block: 1px solid var(--line);
+  background: var(--ink-950);
+}
+
+.world__stage {
+  position: relative;
+  height: clamp(38rem, 80svh, 58rem);
+  overflow: hidden;
+}
+
+.world--day {
+  --ridge-back-top: #3b6174;
+  --ridge-back-bottom: #203f52;
+  --ridge-far-top: #285166;
+  --ridge-far-bottom: #133146;
+  --ridge-mid-top: #112c40;
+  --ridge-mid-bottom: #071a28;
+  --ridge-rim: rgba(234, 233, 211, 0.16);
+  --bird-opacity: 0.72;
+  --firefly-opacity: 0;
+  --forest-far: #0b2231;
+  --forest-mid: #071a27;
+  --forest-near: #05131d;
+  --ground-top: #0a1b20;
+  --ground-bottom: #040b11;
+  --ground-line: rgba(230, 230, 214, 0.12);
+  --field-line: rgba(234, 221, 186, 0.1);
+  --field-line-strong: rgba(248, 232, 192, 0.18);
+  --village: #0b1c27;
+  --village-line: rgba(236, 232, 214, 0.14);
+  --window-opacity: 0;
+  --shore-line: rgba(225, 238, 229, 0.18);
+  --shore: rgba(240, 245, 232, 0.28);
+  --water-top: #2b6375;
+  --water-bottom: #103244;
+  --ripple: rgba(229, 248, 244, 0.24);
+  --reflection: rgba(255, 220, 152, 0.24);
+  --reflection-opacity: 0.35;
+  --stream: rgba(93, 171, 182, 0.32);
+  --stream-light: rgba(241, 255, 251, 0.62);
+  --lane: rgba(156, 142, 108, 0.14);
+  --lane-light: rgba(244, 228, 187, 0.42);
+  --rock: #091923;
+  --rock-light: rgba(237, 239, 221, 0.32);
+  --grass: rgba(184, 190, 156, 0.34);
+  --haze: rgba(226, 211, 183, 0.22);
+  --mist: rgba(222, 226, 211, 0.22);
+  --mist-opacity: 0.55;
+  --cloud: rgba(248, 242, 226, 0.46);
+  --cloud-opacity: 0.55;
+  --star-opacity: 0;
+  --sun-x: 73%;
+  --sun-y: 15%;
+  --sun-size: 4.6rem;
+  --sun-opacity: 1;
+  --moon-opacity: 0;
+  --hut-wall: #0b1d28;
+  --hut-roof: #08151f;
+  --hut-door: #050d13;
+  --hut-line: rgba(241, 234, 213, 0.2);
+  --fence: rgba(181, 170, 136, 0.55);
+  --flock: rgba(244, 243, 224, 0.82);
+  --flock-line: rgba(10, 22, 28, 0.45);
+  --creature: #081219;
+  --cliff: #071824;
+  --cliff-line: rgba(228, 229, 211, 0.16);
+  --waterfall: #a8d5ce;
+  --water-line: rgba(218, 249, 243, 0.4);
+  --spray: rgba(232, 252, 248, 0.55);
+  --moss: #2d4b3d;
+  --moss-line: rgba(181, 203, 170, 0.26);
+  --fern: rgba(128, 160, 117, 0.55);
+  --trunk: #0a181d;
+  --trunk-line: rgba(220, 218, 193, 0.16);
+  --trunk-light: rgba(202, 198, 165, 0.2);
+  --knoll: #0c2330;
+  --knoll-line: rgba(230, 223, 200, 0.18);
+  --wood: #2c241b;
+  --frame-tree: rgba(3, 14, 18, 0.97);
+  --frame-tree-soft: rgba(3, 14, 18, 0.84);
+  --anchor-halo: rgba(99, 211, 196, 0.2);
+  --anchor-line: rgba(237, 243, 228, 0.72);
+}
+
+.world--dawn {
+  --ridge-back-top: #4b5d73;
+  --ridge-back-bottom: #314559;
+  --ridge-far-top: #3a4f64;
+  --ridge-far-bottom: #22374c;
+  --ridge-mid-top: #26384d;
+  --ridge-mid-bottom: #142337;
+  --ridge-rim: rgba(255, 216, 197, 0.2);
+  --bird-opacity: 0.38;
+  --firefly-opacity: 0;
+  --forest-far: #112535;
+  --forest-mid: #0b1c2a;
+  --forest-near: #07141f;
+  --ground-top: #0d1c25;
+  --ground-bottom: #050c14;
+  --ground-line: rgba(245, 217, 197, 0.1);
+  --field-line: rgba(255, 219, 195, 0.1);
+  --field-line-strong: rgba(255, 225, 204, 0.17);
+  --village: #10202e;
+  --village-line: rgba(255, 225, 204, 0.14);
+  --window-opacity: 0.22;
+  --shore-line: rgba(255, 223, 207, 0.17);
+  --shore: rgba(255, 229, 214, 0.27);
+  --water-top: #3b606a;
+  --water-bottom: #193443;
+  --ripple: rgba(255, 227, 208, 0.24);
+  --reflection: rgba(255, 201, 169, 0.27);
+  --reflection-opacity: 0.5;
+  --stream: rgba(154, 191, 187, 0.32);
+  --stream-light: rgba(255, 238, 226, 0.65);
+  --lane: rgba(178, 145, 119, 0.14);
+  --lane-light: rgba(255, 224, 194, 0.42);
+  --rock: #0a1a23;
+  --rock-light: rgba(255, 225, 205, 0.28);
+  --grass: rgba(205, 192, 165, 0.32);
+  --haze: rgba(255, 196, 170, 0.28);
+  --mist: rgba(238, 218, 212, 0.22);
+  --mist-opacity: 0.6;
+  --cloud: rgba(255, 213, 198, 0.48);
+  --cloud-opacity: 0.5;
+  --star-opacity: 0.22;
+  --sun-x: 16%;
+  --sun-y: 39%;
+  --sun-size: 5.4rem;
+  --sun-opacity: 0.96;
+  --moon-opacity: 0.12;
+  --moon-x: 14%;
+  --moon-y: 17%;
+  --moon-size: 3.2rem;
+  --hut-wall: #10242d;
+  --hut-roof: #0b1b23;
+  --hut-door: #071219;
+  --hut-line: rgba(255, 230, 211, 0.2);
+  --fence: rgba(195, 169, 141, 0.53);
+  --flock: rgba(245, 237, 220, 0.8);
+  --flock-line: rgba(24, 29, 30, 0.45);
+  --creature: #0b151c;
+  --cliff: #091927;
+  --cliff-line: rgba(255, 224, 205, 0.17);
+  --waterfall: #b8d9d0;
+  --water-line: rgba(255, 233, 213, 0.4);
+  --spray: rgba(255, 235, 218, 0.58);
+  --moss: #334c3d;
+  --moss-line: rgba(208, 198, 168, 0.25);
+  --fern: rgba(162, 156, 125, 0.52);
+  --trunk: #0d191d;
+  --trunk-line: rgba(255, 226, 205, 0.14);
+  --trunk-light: rgba(241, 206, 179, 0.18);
+  --knoll: #102432;
+  --knoll-line: rgba(255, 223, 204, 0.18);
+  --wood: #33271d;
+  --frame-tree: rgba(4, 13, 19, 0.97);
+  --frame-tree-soft: rgba(4, 13, 19, 0.83);
+  --anchor-halo: rgba(255, 201, 160, 0.16);
+  --anchor-line: rgba(255, 234, 218, 0.73);
+}
+
+.world--dusk {
+  --ridge-back-top: #534760;
+  --ridge-back-bottom: #3a3348;
+  --ridge-far-top: #3e3548;
+  --ridge-far-bottom: #262638;
+  --ridge-mid-top: #282a3e;
+  --ridge-mid-bottom: #131728;
+  --ridge-rim: rgba(255, 185, 139, 0.22);
+  --bird-opacity: 0.42;
+  --firefly-opacity: 0.14;
+  --forest-far: #1a1d2d;
+  --forest-mid: #111424;
+  --forest-near: #090d18;
+  --ground-top: #0f1320;
+  --ground-bottom: #05080f;
+  --ground-line: rgba(255, 196, 157, 0.1);
+  --field-line: rgba(250, 184, 136, 0.1);
+  --field-line-strong: rgba(255, 205, 166, 0.16);
+  --village: #181726;
+  --village-line: rgba(255, 207, 172, 0.14);
+  --window-opacity: 0.68;
+  --shore-line: rgba(255, 202, 171, 0.16);
+  --shore: rgba(255, 212, 183, 0.25);
+  --water-top: #4a5664;
+  --water-bottom: #1b2b3b;
+  --ripple: rgba(255, 207, 171, 0.23);
+  --reflection: rgba(255, 190, 124, 0.32);
+  --reflection-opacity: 0.7;
+  --stream: rgba(206, 157, 132, 0.3);
+  --stream-light: rgba(255, 223, 187, 0.65);
+  --lane: rgba(159, 118, 98, 0.15);
+  --lane-light: rgba(255, 207, 164, 0.43);
+  --rock: #0c1722;
+  --rock-light: rgba(255, 193, 156, 0.26);
+  --grass: rgba(189, 179, 157, 0.3);
+  --haze: rgba(255, 170, 127, 0.3);
+  --mist: rgba(235, 186, 171, 0.2);
+  --mist-opacity: 0.55;
+  --cloud: rgba(250, 188, 162, 0.4);
+  --cloud-opacity: 0.43;
+  --star-opacity: 0.44;
+  --sun-x: 84%;
+  --sun-y: 39%;
+  --sun-size: 5.7rem;
+  --sun-opacity: 0.88;
+  --moon-opacity: 0.04;
+  --moon-x: 86%;
+  --moon-y: 17%;
+  --moon-size: 3.3rem;
+  --hut-wall: #171723;
+  --hut-roof: #0e101a;
+  --hut-door: #090b12;
+  --hut-line: rgba(255, 207, 174, 0.19);
+  --fence: rgba(185, 150, 126, 0.5);
+  --flock: rgba(242, 225, 204, 0.7);
+  --flock-line: rgba(27, 22, 24, 0.5);
+  --creature: #0b0d16;
+  --cliff: #0b1421;
+  --cliff-line: rgba(255, 199, 166, 0.16);
+  --waterfall: #bbccc8;
+  --water-line: rgba(255, 218, 185, 0.38);
+  --spray: rgba(255, 226, 202, 0.55);
+  --moss: #2d3e36;
+  --moss-line: rgba(205, 172, 140, 0.22);
+  --fern: rgba(145, 132, 108, 0.48);
+  --trunk: #0b1119;
+  --trunk-line: rgba(255, 203, 169, 0.13);
+  --trunk-light: rgba(236, 175, 135, 0.16);
+  --knoll: #141a2a;
+  --knoll-line: rgba(255, 202, 168, 0.17);
+  --wood: #332419;
+  --frame-tree: rgba(3, 9, 14, 0.98);
+  --frame-tree-soft: rgba(3, 9, 14, 0.86);
+  --anchor-halo: rgba(255, 184, 137, 0.17);
+  --anchor-line: rgba(255, 228, 209, 0.72);
+}
+
+.world--night {
+  --ridge-back-top: #1c3453;
+  --ridge-back-bottom: #10233b;
+  --ridge-far-top: #14253b;
+  --ridge-far-bottom: #0b1b2e;
+  --ridge-mid-top: #0b1a2c;
+  --ridge-mid-bottom: #06111e;
+  --ridge-rim: rgba(160, 201, 231, 0.18);
+  --bird-opacity: 0;
+  --firefly-opacity: 0.9;
+  --forest-far: #071320;
+  --forest-mid: #050d18;
+  --forest-near: #030912;
+  --ground-top: #040d15;
+  --ground-bottom: #02060b;
+  --ground-line: rgba(145, 188, 223, 0.11);
+  --field-line: rgba(141, 181, 216, 0.07);
+  --field-line-strong: rgba(154, 195, 227, 0.12);
+  --village: #07101b;
+  --village-line: rgba(160, 194, 223, 0.12);
+  --window-opacity: 1;
+  --shore-line: rgba(146, 191, 225, 0.2);
+  --shore: rgba(157, 201, 232, 0.28);
+  --water-top: #102b44;
+  --water-bottom: #061323;
+  --ripple: rgba(158, 206, 241, 0.2);
+  --reflection: rgba(172, 211, 240, 0.22);
+  --reflection-opacity: 0.85;
+  --stream: rgba(67, 120, 161, 0.34);
+  --stream-light: rgba(172, 218, 246, 0.55);
+  --lane: rgba(57, 77, 99, 0.18);
+  --lane-light: rgba(144, 176, 203, 0.3);
+  --rock: #050d15;
+  --rock-light: rgba(142, 181, 214, 0.24);
+  --grass: rgba(113, 152, 173, 0.26);
+  --haze: rgba(59, 103, 146, 0.18);
+  --mist: rgba(101, 144, 182, 0.16);
+  --mist-opacity: 0.55;
+  --cloud: rgba(132, 172, 208, 0.18);
+  --cloud-opacity: 0.28;
+  --star-opacity: 0.95;
+  --sun-x: 73%;
+  --sun-y: 15%;
+  --sun-size: 4.6rem;
+  --sun-opacity: 0;
+  --moon-opacity: 1;
+  --moon-x: 73%;
+  --moon-y: 14%;
+  --moon-size: 3.8rem;
+  --hut-wall: #060f18;
+  --hut-roof: #040a11;
+  --hut-door: #02060a;
+  --hut-line: rgba(159, 195, 222, 0.18);
+  --fence: rgba(108, 125, 129, 0.45);
+  --flock: rgba(196, 210, 210, 0.58);
+  --flock-line: rgba(5, 10, 15, 0.6);
+  --creature: #02070c;
+  --cliff: #040d16;
+  --cliff-line: rgba(146, 184, 214, 0.15);
+  --waterfall: #8ec4cf;
+  --water-line: rgba(142, 195, 216, 0.35);
+  --spray: rgba(174, 219, 235, 0.42);
+  --moss: #1d392f;
+  --moss-line: rgba(119, 167, 140, 0.2);
+  --fern: rgba(79, 119, 101, 0.45);
+  --trunk: #030a0f;
+  --trunk-line: rgba(141, 180, 202, 0.12);
+  --trunk-light: rgba(124, 164, 176, 0.15);
+  --knoll: #071522;
+  --knoll-line: rgba(151, 188, 214, 0.15);
+  --wood: #1b1612;
+  --frame-tree: rgba(1, 5, 9, 0.99);
+  --frame-tree-soft: rgba(1, 5, 9, 0.9);
+  --anchor-halo: rgba(99, 211, 196, 0.25);
+  --anchor-line: rgba(212, 238, 232, 0.7);
+}
+
+.world__hud {
+  position: absolute;
+  inset: clamp(1rem, 2.6vw, 1.6rem) clamp(1rem, 4vw, 3rem) auto;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--paper-72);
+  text-shadow: 0 1px 12px rgba(1, 3, 8, 0.9);
+}
+
+.world__light {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+.world__light-icon {
+  display: inline-flex;
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  color: var(--aqua-bright);
+}
+
+.world__light-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.world__light-dot {
+  color: var(--paper-40);
+}
+
+.world__found {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  white-space: nowrap;
+}
+
+.world__found-label {
+  color: var(--paper-56);
+}
+
+.world__ticks {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.world__ticks span {
+  width: 0.31rem;
+  height: 0.31rem;
+  transform: rotate(45deg);
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  transition:
+    background 500ms var(--ease-out),
+    border-color 500ms var(--ease-out),
+    box-shadow 500ms var(--ease-out);
+}
+
+.world__ticks span.is-on {
+  border-color: var(--aqua);
+  background: var(--aqua);
+  box-shadow: 0 0 8px rgba(99, 211, 196, 0.45);
+}
+
+.world__found-value {
+  color: var(--paper);
+  font-variant-numeric: tabular-nums;
+}
+
+.world__caption {
+  position: absolute;
+  left: clamp(1rem, 4vw, 3rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 30;
+  display: grid;
+  gap: 0.28rem;
+  width: min(31rem, calc(100% - 2 * clamp(1rem, 4vw, 3rem)));
+  padding: 1rem 1.35rem 1.1rem 1.25rem;
+  border-left: 1px solid var(--line-aqua);
+  background: linear-gradient(
+    90deg,
+    rgba(3, 6, 16, 0.77) 0%,
+    rgba(3, 6, 16, 0.52) 58%,
+    rgba(3, 6, 16, 0) 100%
+  );
+}
+
+.world__caption-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--aqua);
+}
+
+.world__caption-kicker span:first-child {
+  color: var(--paper-56);
+}
+
+.world__caption-title {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  color: var(--paper);
+}
+
+.world__caption-place {
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+}
+
+.world__caption-text {
+  max-width: 27rem;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--paper-72);
+}
+
+.world__caption-status {
+  margin-top: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+}
+
+.world__caption-status.is-found {
+  color: var(--aqua);
+}
+
+.world-page__atlas {
+  padding-block: var(--section-y);
+}
+
+.world-page__atlas-head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(18rem, 0.7fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.world-page__atlas-title {
+  max-width: 19ch;
+  margin-top: 1rem;
+  font-size: var(--step-4);
+  line-height: 1.02;
+}
+
+.world-page__atlas-head .lede {
+  justify-self: end;
+  max-width: 32rem;
+}
+
+.world-index {
+  border-top: 1px solid var(--line);
+}
+
+.world-index li {
+  border-bottom: 1px solid var(--line);
+}
+
+.world-index__button {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(8rem, 0.9fr) minmax(10rem, 1.1fr) auto 1.4rem;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  padding: 1.05rem 0.25rem;
+  text-align: left;
+  color: var(--paper-72);
+  transition:
+    color 300ms var(--ease-out),
+    background 300ms var(--ease-out);
+}
+
+.world-index__button:hover {
+  color: var(--paper);
+  background: linear-gradient(90deg, rgba(99, 211, 196, 0.055), transparent 62%);
+}
+
+.world-index__num {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  color: var(--aqua);
+}
+
+.world-index__place {
+  display: grid;
+  gap: 0.08rem;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: var(--paper);
+}
+
+.world-index__place span {
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+}
+
+.world-index__name {
+  font-size: var(--step-0);
+  color: var(--paper-56);
+}
+
+.world-index__status {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+}
+
+.world-index li.is-found .world-index__status {
+  color: var(--aqua);
+}
+
+.world-index__arrow {
+  color: var(--paper-40);
+  transition:
+    transform 300ms var(--ease-out),
+    color 300ms var(--ease-out);
+}
+
+.world-index__button:hover .world-index__arrow {
+  color: var(--aqua);
+  transform: translateX(4px);
+}
+
+.world-page__atlas-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2.5rem;
+  padding-top: clamp(1.8rem, 3vw, 2.5rem);
+}
+
+.world-page__atlas-foot p {
+  max-width: 42rem;
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--paper-40);
+}
+
+@media (max-width: 62rem) {
+  .world-page__intro,
+  .world-page__atlas-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .world-page__intro-side,
+  .world-page__atlas-head .lede {
+    justify-self: start;
+  }
+
+  .world-page__intro-side {
+    max-width: 42rem;
+  }
+
+  .world-page__title {
+    max-width: 11ch;
+  }
+}
+
+@media (max-width: 52rem) {
+  .world__stage {
+    height: clamp(38rem, 76svh, 48rem);
+  }
+
+  .world__hud {
+    font-size: var(--step--3);
+  }
+
+  .world__found-label {
+    display: none;
+  }
+
+  .world__caption {
+    width: calc(100% - 2rem);
+    left: 1rem;
+    bottom: 1rem;
+    padding: 0.9rem 1rem 1rem;
+    background: linear-gradient(
+      90deg,
+      rgba(3, 6, 16, 0.82) 0%,
+      rgba(3, 6, 16, 0.68) 72%,
+      rgba(3, 6, 16, 0.22) 100%
+    );
+  }
+
+  .world__caption-text {
+    font-size: var(--step--1);
+  }
+
+  .world-index__button {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: 0.35rem 0.8rem;
+    padding-block: 1rem;
+  }
+
+  .world-index__num {
+    grid-row: 1;
+  }
+
+  .world-index__place {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .world-index__name {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: var(--step--1);
+  }
+
+  .world-index__status {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .world-index__arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 34rem) {
+  .world-page__title {
+    font-size: clamp(2.85rem, 15vw, 4.8rem);
+  }
+
+  .world__hud {
+    align-items: flex-start;
+  }
+
+  .world__found {
+    gap: 0.4rem;
+  }
+
+  .world__ticks {
+    gap: 0.24rem;
+  }
+
+  .world__caption-title {
+    font-size: var(--step-1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world-page *,
+  .world-page *::before,
+  .world-page *::after {
+    scroll-behavior: auto;
+  }
+}
