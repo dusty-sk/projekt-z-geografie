@@ -1,0 +1,1568 @@
+/* ==========================================================================
+   Easter eggs — hidden layers, terminals, constellations, night protocol.
+   Everything lives above the site chrome but below the presentation deck's
+   own overlays; the whole module can be removed without touching page layout.
+   ========================================================================== */
+
+.egg-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Shared modal / screen chrome
+   -------------------------------------------------------------------------- */
+
+.egg-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+  background:
+    radial-gradient(70rem 40rem at 50% 0%, rgba(58, 94, 150, 0.22), rgba(3, 6, 16, 0) 62%),
+    rgba(2, 5, 12, 0.84);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  animation: egg-fade-in 220ms var(--ease-out) both;
+}
+
+.egg-panel {
+  position: relative;
+  margin: auto;
+  width: min(48rem, 100%);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background:
+    var(--card-sheen),
+    linear-gradient(180deg, rgba(12, 23, 42, 0.97) 0%, rgba(5, 10, 20, 0.99) 100%) padding-box,
+    var(--card-line) border-box;
+  box-shadow: var(--card-hi), 0 40px 120px -40px rgba(2, 4, 10, 0.95);
+  overflow: hidden;
+  animation: egg-panel-in 320ms var(--ease-entrance) both;
+}
+
+.egg-panel--wide {
+  width: min(70rem, 100%);
+}
+
+.egg-panel__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.7rem 0.55rem 1rem;
+  border-bottom: 1px solid var(--line-soft);
+  background: rgba(3, 7, 15, 0.6);
+}
+
+.egg-panel__signal {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--aqua);
+  box-shadow: 0 0 10px var(--glow-key);
+  animation: egg-signal 2.4s ease-in-out infinite;
+}
+
+.egg-panel__system {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.egg-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-56);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.egg-close span {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.egg-close:hover {
+  color: var(--paper);
+  border-color: var(--line);
+}
+
+.egg-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--aqua);
+}
+
+.egg-title {
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  background: linear-gradient(180deg, #fffdf7 0%, #f2f8f5 60%, #c8e4de 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.egg-lede {
+  max-width: 60ch;
+  font-size: var(--step-0);
+  line-height: 1.7;
+  color: var(--paper-72);
+}
+
+.egg-note {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: var(--step--2);
+  line-height: 1.65;
+  color: var(--paper-40);
+}
+
+.egg-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line-aqua);
+  border-radius: var(--radius-sm);
+  background: rgba(99, 211, 196, 0.05);
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--aqua-bright);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.egg-button:hover {
+  background: rgba(99, 211, 196, 0.14);
+  color: var(--paper);
+}
+
+/* --------------------------------------------------------------------------
+   Terminal
+   -------------------------------------------------------------------------- */
+
+.egg-terminal {
+  display: grid;
+  gap: 0.75rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background:
+    radial-gradient(24rem 14rem at 50% 0%, rgba(99, 211, 196, 0.07), rgba(3, 6, 16, 0) 70%),
+    #02050b;
+}
+
+.egg-terminal__screen {
+  min-height: clamp(15rem, 40vh, 22rem);
+  max-height: 46vh;
+  overflow-y: auto;
+  padding: 1rem;
+  border: 1px solid rgba(99, 211, 196, 0.2);
+  border-radius: var(--radius-sm);
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(245, 240, 231, 0.018) 0,
+      rgba(245, 240, 231, 0.018) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    rgba(1, 4, 9, 0.9);
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--aqua-bright);
+  font-variant-ligatures: none;
+  overscroll-behavior: contain;
+}
+
+.egg-terminal__screen p {
+  min-height: 1.65em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-shadow: 0 0 12px rgba(99, 211, 196, 0.18);
+}
+
+.egg-terminal__form {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: rgba(5, 10, 20, 0.8);
+}
+
+.egg-terminal__prompt {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--aqua);
+  white-space: nowrap;
+}
+
+.egg-terminal__input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: max(1rem, var(--step--1));
+  color: var(--paper);
+  caret-color: var(--aqua);
+}
+
+.egg-terminal__input:focus-visible {
+  outline: 0;
+  box-shadow: none;
+}
+
+.egg-terminal__hint {
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.06em;
+  color: var(--paper-24);
+}
+
+/* --------------------------------------------------------------------------
+   Lost archive
+   -------------------------------------------------------------------------- */
+
+.egg-archive {
+  display: grid;
+  gap: 1.1rem;
+  padding: clamp(1.15rem, 3.4vw, 2rem);
+}
+
+.egg-archive__grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 54rem) {
+  .egg-archive__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.egg-archive__doc {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+  padding: 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background:
+    var(--card-sheen),
+    linear-gradient(180deg, rgba(22, 36, 60, 0.4), rgba(6, 11, 23, 0.55));
+}
+
+.egg-archive__doc-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+}
+
+.egg-archive__doc-title {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.15;
+  color: var(--paper);
+}
+
+.egg-archive__doc-body {
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--paper-72);
+}
+
+.egg-archive__doc-hint {
+  padding-left: 0.7rem;
+  border-left: 1px solid var(--line-aqua);
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  line-height: 1.6;
+  color: var(--aqua);
+}
+
+.egg-archive__doc-action {
+  justify-self: start;
+  margin-top: 0.2rem;
+}
+
+.egg-archive__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.egg-archive__progress {
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+}
+
+.egg-archive__replay {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Constellation stars (triggers) + reward screen
+   -------------------------------------------------------------------------- */
+
+.egg-star {
+  display: inline-flex;
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  padding: 0;
+  color: rgba(245, 240, 231, 0.25);
+  transition: color var(--dur) var(--ease-out), filter var(--dur) var(--ease-out);
+}
+
+.egg-star svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.egg-star:hover {
+  color: rgba(245, 240, 231, 0.7);
+}
+
+.egg-star.is-lit {
+  color: var(--aqua-bright);
+  filter: drop-shadow(0 0 8px rgba(99, 211, 196, 0.65));
+}
+
+.egg-star.is-ok {
+  animation: egg-star-pop 700ms var(--ease-out) both;
+}
+
+.egg-star.is-bad {
+  animation: egg-star-shake 620ms var(--ease-in-out) both;
+  color: #ff9d9d;
+}
+
+.egg-star--hero {
+  position: absolute;
+  top: 31%;
+  right: clamp(1.5rem, 9vw, 10rem);
+  z-index: 2;
+  width: 1.3rem;
+  height: 1.3rem;
+  opacity: 0.8;
+}
+
+.egg-star--hero:hover {
+  opacity: 1;
+}
+
+.egg-star-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.ph__ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+}
+
+.credits__title-row .egg-star {
+  margin-left: 0.2rem;
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.egg-constellation {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.15rem, 3.4vw, 2rem);
+}
+
+.egg-constellation__sky {
+  width: 100%;
+  margin-block: 0.25rem;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background:
+    radial-gradient(30rem 16rem at 50% 30%, rgba(58, 94, 150, 0.16), rgba(2, 5, 12, 0) 70%),
+    radial-gradient(20rem 12rem at 70% 80%, rgba(99, 211, 196, 0.06), rgba(2, 5, 12, 0) 70%),
+    #030711;
+}
+
+.egg-constellation__ridge,
+.egg-constellation__tower {
+  fill: none;
+  stroke: rgba(245, 240, 231, 0.2);
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+}
+
+.egg-constellation__tower {
+  stroke: rgba(245, 240, 231, 0.12);
+}
+
+.egg-constellation__link {
+  fill: none;
+  stroke: rgba(99, 211, 196, 0.55);
+  stroke-width: 1;
+  stroke-dasharray: 3 7;
+  animation: egg-link-drift 9s linear infinite;
+}
+
+.egg-constellation__star {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: egg-star-reveal 900ms var(--ease-out) both;
+}
+
+.egg-constellation__point {
+  fill: var(--aqua-bright);
+}
+
+.egg-constellation__rays {
+  fill: none;
+  stroke: rgba(140, 233, 220, 0.55);
+  stroke-width: 0.8;
+}
+
+.egg-constellation__whisper {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.3;
+  color: var(--paper-72);
+  max-width: 42rem;
+}
+
+/* --------------------------------------------------------------------------
+   Secret network (triggers) + reward screen
+   -------------------------------------------------------------------------- */
+
+.egg-net {
+  display: inline-flex;
+  flex: none;
+  width: 1.65rem;
+  height: 1.65rem;
+  padding: 0;
+  color: rgba(245, 240, 231, 0.22);
+  transition: color var(--dur) var(--ease-out), filter var(--dur) var(--ease-out);
+}
+
+.egg-net svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.egg-net path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.egg-net circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.egg-net:hover {
+  color: rgba(245, 240, 231, 0.7);
+}
+
+.egg-net.is-found {
+  color: var(--aqua);
+  filter: drop-shadow(0 0 8px rgba(99, 211, 196, 0.5));
+}
+
+.egg-net-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+}
+
+.egg-net-slot--credits {
+  margin-top: 0.75rem;
+}
+
+.egg-network {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.15rem, 3.4vw, 2rem);
+}
+
+.egg-network__map {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background:
+    radial-gradient(30rem 20rem at 50% 20%, rgba(58, 94, 150, 0.14), rgba(2, 5, 12, 0) 70%),
+    #030711;
+}
+
+.egg-network__grid line {
+  stroke: rgba(245, 240, 231, 0.045);
+  stroke-width: 1;
+}
+
+.egg-network__edge {
+  stroke: rgba(245, 240, 231, 0.14);
+  stroke-width: 1;
+  transition: stroke var(--dur-fast) var(--ease-out), stroke-width var(--dur-fast) var(--ease-out);
+}
+
+.egg-network__edge.is-active {
+  stroke: rgba(99, 211, 196, 0.65);
+  stroke-width: 1.6;
+}
+
+.egg-network__node {
+  cursor: pointer;
+  outline: none;
+}
+
+.egg-network__halo {
+  fill: var(--aqua);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease-out);
+}
+
+.egg-network__node.is-active .egg-network__halo,
+.egg-network__node:focus-visible .egg-network__halo {
+  opacity: 0.12;
+}
+
+.egg-network__dot {
+  fill: rgba(245, 240, 231, 0.55);
+  stroke: #030711;
+  stroke-width: 2;
+  transition: fill var(--dur-fast) var(--ease-out);
+}
+
+.egg-network__node.is-active .egg-network__dot {
+  fill: var(--aqua-bright);
+}
+
+.egg-network__node text {
+  fill: rgba(245, 240, 231, 0.5);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+.egg-network__node.is-active text {
+  fill: var(--paper);
+}
+
+.egg-network__info {
+  min-height: 4.75rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background: rgba(7, 13, 25, 0.6);
+}
+
+.egg-network__info-title {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: var(--paper);
+}
+
+.egg-network__info-meta {
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--aqua);
+}
+
+.egg-network__info-text {
+  margin-top: 0.25rem;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--paper-72);
+}
+
+@media (max-width: 42rem) {
+  .egg-network__node text {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Developer mode
+   -------------------------------------------------------------------------- */
+
+.egg-dev {
+  display: grid;
+  gap: 1.1rem;
+  padding: clamp(1.15rem, 3.4vw, 2rem);
+}
+
+.egg-dev__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.egg-dev__stats div {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.8rem 0.9rem;
+  background: rgba(6, 11, 23, 0.88);
+}
+
+.egg-dev__stats dt {
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+}
+
+.egg-dev__stats dd {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.15;
+  color: var(--aqua-bright);
+  overflow-wrap: anywhere;
+}
+
+.egg-dev__columns {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 50rem) {
+  .egg-dev__columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.egg-dev__heading {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-56);
+}
+
+.egg-dev__modules,
+.egg-dev__fake {
+  display: grid;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+}
+
+.egg-dev__modules li,
+.egg-dev__fake li {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.35rem 0.15rem;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--paper-56);
+}
+
+.egg-dev__modules li span:last-child,
+.egg-dev__fake li span:last-child {
+  color: var(--aqua);
+  text-align: right;
+}
+
+.egg-dev__fake li span:last-child {
+  color: var(--paper-40);
+}
+
+.egg-dev__console {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(99, 211, 196, 0.16);
+  border-radius: var(--radius-sm);
+  background: #02050b;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: rgba(140, 233, 220, 0.72);
+}
+
+@media (max-width: 40rem) {
+  .egg-dev__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Midnight protocol
+   -------------------------------------------------------------------------- */
+
+.egg-midnight {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  overflow: hidden;
+  background:
+    radial-gradient(30rem 20rem at 18% 0%, rgba(58, 94, 150, 0.2), rgba(2, 5, 12, 0) 65%),
+    radial-gradient(26rem 18rem at 90% 100%, rgba(99, 211, 196, 0.08), rgba(2, 5, 12, 0) 65%);
+}
+
+.egg-midnight__clock {
+  position: absolute;
+  top: -0.6rem;
+  right: clamp(0.5rem, 3vw, 2rem);
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 16vw, 11rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: rgba(99, 211, 196, 0.07);
+  pointer-events: none;
+}
+
+.egg-midnight .egg-title,
+.egg-midnight .egg-eyebrow,
+.egg-midnight .egg-lede,
+.egg-midnight .egg-note {
+  position: relative;
+}
+
+.egg-midnight__quote {
+  padding-left: 1rem;
+  border-left: 1px solid var(--line-aqua);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.35;
+  color: var(--paper-72);
+}
+
+/* --------------------------------------------------------------------------
+   Silent observer
+   -------------------------------------------------------------------------- */
+
+.egg-observer {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 900ms var(--ease-out);
+}
+
+.egg-observer.is-visible {
+  opacity: 1;
+}
+
+.egg-observer svg {
+  width: min(19rem, 60vw);
+  height: auto;
+  overflow: visible;
+  animation: egg-observer-breathe 6s ease-in-out infinite;
+}
+
+.egg-observer__ring,
+.egg-observer__eye {
+  fill: none;
+  stroke: rgba(140, 233, 220, 0.26);
+  stroke-width: 1;
+}
+
+.egg-observer__ring--inner {
+  stroke: rgba(245, 240, 231, 0.12);
+}
+
+.egg-observer__pupil {
+  fill: rgba(4, 8, 16, 0.9);
+  stroke: rgba(140, 233, 220, 0.5);
+  stroke-width: 1.5;
+}
+
+.egg-observer__spark {
+  fill: var(--aqua-bright);
+}
+
+.egg-observer-message {
+  position: fixed;
+  right: clamp(1rem, 4vw, 2.5rem);
+  bottom: clamp(1rem, 4vw, 2.5rem);
+  z-index: 1180;
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  width: min(26rem, calc(100vw - 2rem));
+  padding: 1rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background:
+    var(--card-sheen),
+    linear-gradient(180deg, rgba(12, 23, 42, 0.98), rgba(5, 10, 20, 0.99)) padding-box,
+    var(--card-line) border-box;
+  box-shadow: var(--shadow-lg);
+  animation: egg-message-in 420ms var(--ease-entrance) both;
+}
+
+.egg-observer-message__mark {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  margin-top: 0.45rem;
+  border-radius: 50%;
+  background: var(--aqua);
+  box-shadow: 0 0 12px var(--glow-key);
+}
+
+.egg-observer-message p {
+  flex: 1;
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--paper-72);
+}
+
+.egg-observer-message__close {
+  flex: none;
+  padding: 0 0.15rem;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--paper-40);
+}
+
+.egg-observer-message__close:hover {
+  color: var(--paper);
+}
+
+/* --------------------------------------------------------------------------
+   Glitch layer
+   -------------------------------------------------------------------------- */
+
+.egg-glitch-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1150;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.egg-glitch-layer__scan {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(140, 233, 220, 0.8), transparent);
+  box-shadow: 0 0 22px rgba(99, 211, 196, 0.6);
+  animation: egg-scan 1.4s linear infinite;
+}
+
+.egg-glitch-layer__band {
+  position: absolute;
+  inset-inline: -5%;
+  top: 34%;
+  height: 8%;
+  background: linear-gradient(
+    180deg,
+    rgba(99, 211, 196, 0) 0%,
+    rgba(99, 211, 196, 0.12) 35%,
+    rgba(245, 240, 231, 0.14) 50%,
+    rgba(255, 90, 120, 0.08) 65%,
+    rgba(99, 211, 196, 0) 100%
+  );
+  animation: egg-band 1.15s steps(3, end) infinite;
+}
+
+.egg-glitch-layer__glyph {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--aqua-bright);
+  text-shadow: 0 0 10px rgba(99, 211, 196, 0.65);
+  animation: egg-glyph 620ms linear both;
+}
+
+html.egg-glitch .ambient {
+  filter: hue-rotate(38deg) saturate(1.5) contrast(1.04);
+}
+
+html.egg-glitch .terrain,
+html.egg-glitch .hero__vignette {
+  filter: hue-rotate(20deg) saturate(1.6);
+}
+
+html.egg-glitch h1,
+html.egg-glitch h2,
+html.egg-glitch .hero__title,
+html.egg-glitch .cta__title {
+  text-shadow:
+    1.5px 0 rgba(255, 90, 120, 0.32),
+    -1.5px 0 rgba(80, 220, 255, 0.34);
+}
+
+html.egg-glitch .page-transition {
+  animation: egg-shift 2s steps(2, end) both;
+}
+
+html.egg-glitch #root::after {
+  opacity: 0.11;
+}
+
+/* Whole-page trance for the terminal's `detva` command. */
+html.egg-trance main#main,
+html.egg-trance .footer {
+  animation: egg-trance-flow 2.6s var(--ease-in-out) both;
+}
+
+html.egg-trance body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1140;
+  pointer-events: none;
+  background:
+    repeating-radial-gradient(
+      circle at 50% 42%,
+      rgba(99, 211, 196, 0.08) 0,
+      rgba(99, 211, 196, 0.08) 1px,
+      transparent 1px,
+      transparent 44px
+    ),
+    radial-gradient(60rem 40rem at 50% 42%, rgba(58, 94, 150, 0.22), rgba(2, 5, 12, 0) 70%);
+  mix-blend-mode: screen;
+  animation: egg-trance-veil 2.6s var(--ease-in-out) both;
+}
+
+/* --------------------------------------------------------------------------
+   Midnight theme (data-egg-night on <html>)
+   -------------------------------------------------------------------------- */
+
+html[data-egg-night] {
+  --grad-page: linear-gradient(
+    180deg,
+    #010309 0%,
+    #020814 28%,
+    #03101d 54%,
+    #020b18 78%,
+    #01050e 100%
+  );
+  --glow-aqua: rgba(99, 211, 196, 0.16);
+  --glow-blue: rgba(48, 76, 130, 0.2);
+  --grid-dot: rgba(140, 233, 220, 0.045);
+  --grid-dot-glow: rgba(140, 233, 220, 0.2);
+  --line-aqua: rgba(99, 211, 196, 0.5);
+}
+
+html[data-egg-night] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(52rem 32rem at 78% 8%, rgba(99, 211, 196, 0.12), transparent 65%),
+    radial-gradient(44rem 30rem at 12% 72%, rgba(58, 94, 150, 0.18), transparent 68%);
+}
+
+html[data-egg-night] .ambient {
+  filter: saturate(1.35) brightness(0.82);
+}
+
+html[data-egg-night] .terrain,
+html[data-egg-night] .nav__mark,
+html[data-egg-night] .credits__mark,
+html[data-egg-night] .eyebrow::before,
+html[data-egg-night] .hero__coord-mark {
+  filter: drop-shadow(0 0 12px rgba(99, 211, 196, 0.65));
+}
+
+html[data-egg-night] .hero__vignette {
+  opacity: 1.35;
+  filter: saturate(1.4) hue-rotate(12deg);
+}
+
+html[data-egg-night] .hero__img,
+html[data-egg-night] .ph__media img {
+  filter: brightness(0.7) saturate(0.85) hue-rotate(8deg);
+}
+
+html[data-egg-night] .nav {
+  background: rgba(1, 4, 10, 0.75);
+}
+
+html[data-egg-night] .sea path,
+html[data-egg-night] .sea circle {
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   Completionist
+   -------------------------------------------------------------------------- */
+
+.egg-completionist {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  padding: clamp(1.5rem, 4.5vw, 3rem);
+  text-align: center;
+  background:
+    radial-gradient(30rem 24rem at 50% 0%, rgba(99, 211, 196, 0.1), rgba(2, 5, 12, 0) 65%),
+    radial-gradient(26rem 20rem at 50% 100%, rgba(58, 94, 150, 0.14), rgba(2, 5, 12, 0) 70%);
+}
+
+.egg-completionist__badge {
+  width: clamp(7rem, 18vw, 9.5rem);
+  color: var(--aqua);
+  filter: drop-shadow(0 0 24px rgba(99, 211, 196, 0.35));
+}
+
+.egg-completionist__badge svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.egg-completionist__badge-ring {
+  fill: none;
+  stroke: rgba(140, 233, 220, 0.5);
+  stroke-width: 1;
+}
+
+.egg-completionist__badge-ring--inner {
+  stroke: rgba(245, 240, 231, 0.16);
+  stroke-dasharray: 2 5;
+}
+
+.egg-completionist__badge-dot {
+  fill: var(--aqua-bright);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: egg-star-reveal 700ms var(--ease-out) both;
+}
+
+.egg-completionist__badge-spiral {
+  fill: none;
+  stroke: rgba(245, 240, 231, 0.65);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+
+.egg-completionist__title {
+  max-width: 22ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4.4vw, 2.85rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #fffdf7 0%, #f2f8f5 55%, #9fe4d9 120%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.egg-completionist__lede {
+  max-width: 44ch;
+  font-size: var(--step-0);
+  line-height: 1.7;
+  color: var(--paper-72);
+}
+
+.egg-completionist__message {
+  max-width: 42ch;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.35;
+  color: var(--paper);
+}
+
+.egg-completionist__badge-label {
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--line-aqua);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--aqua-bright);
+  background: rgba(99, 211, 196, 0.06);
+}
+
+.egg-completionist .egg-note {
+  width: 100%;
+  text-align: left;
+}
+
+/* --------------------------------------------------------------------------
+   Secret location (Bod 11)
+   -------------------------------------------------------------------------- */
+
+.egg-location11 {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+}
+
+.egg-location11__radar {
+  position: relative;
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-block: 0.25rem 0.35rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(99, 211, 196, 0.16) 0%, rgba(99, 211, 196, 0) 62%),
+    rgba(2, 8, 14, 0.9);
+  box-shadow: inset 0 0 0 1px rgba(99, 211, 196, 0.25);
+}
+
+.egg-location11__radar span {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(99, 211, 196, 0.22);
+  border-radius: 50%;
+  animation: egg-radar 3.2s var(--ease-out) infinite;
+  opacity: 0;
+}
+
+.egg-location11__radar span:nth-child(2) {
+  animation-delay: 0.7s;
+}
+
+.egg-location11__radar span:nth-child(3) {
+  animation-delay: 1.4s;
+}
+
+.egg-location11__radar i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--aqua-bright);
+  box-shadow: 0 0 12px var(--aqua);
+}
+
+.egg-location11__coord {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  color: var(--aqua);
+}
+
+.egg-location11__para {
+  max-width: 56ch;
+  font-size: var(--step-0);
+  line-height: 1.72;
+  color: var(--paper-72);
+}
+
+.egg-location11 .egg-note {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Map secret marker — deliberately NOT using the .map-marker classes so
+   existing marker counts and styling stay untouched.
+   -------------------------------------------------------------------------- */
+
+.egg-secret-marker-wrap {
+  background: transparent;
+  border: 0;
+}
+
+.egg-secret-marker {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.egg-secret-marker__dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(140, 233, 220, 0.8);
+  box-shadow: 0 0 8px rgba(99, 211, 196, 0.7);
+}
+
+.egg-secret-marker__ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(99, 211, 196, 0.4);
+  border-radius: 50%;
+  animation: egg-marker-pulse 2.8s var(--ease-out) infinite;
+}
+
+.egg-secret-marker:hover .egg-secret-marker__dot {
+  background: var(--paper);
+}
+
+/* --------------------------------------------------------------------------
+   Footer signs
+   -------------------------------------------------------------------------- */
+
+.footer__signs {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.footer__archive {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem;
+  color: var(--paper-24);
+  border-radius: var(--radius-xs);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.footer__archive svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.footer__archive:hover {
+  color: var(--aqua);
+}
+
+.footer__signs .egg-star {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+/* --------------------------------------------------------------------------
+   Keyframes
+   -------------------------------------------------------------------------- */
+
+@keyframes egg-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes egg-panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes egg-message-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.75rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes egg-signal {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes egg-star-pop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.65);
+    color: var(--aqua-bright);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes egg-star-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-3px);
+  }
+  40% {
+    transform: translateX(3px);
+  }
+  60% {
+    transform: translateX(-2px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes egg-star-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes egg-link-drift {
+  to {
+    stroke-dashoffset: -80;
+  }
+}
+
+@keyframes egg-observer-breathe {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
+  }
+}
+
+@keyframes egg-scan {
+  from {
+    transform: translateY(-10vh);
+  }
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+@keyframes egg-band {
+  0% {
+    transform: translateY(-4vh);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(22vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(52vh);
+    opacity: 0.2;
+  }
+}
+
+@keyframes egg-glyph {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -180%) scale(0.75);
+  }
+}
+
+@keyframes egg-shift {
+  0%,
+  100% {
+    transform: none;
+  }
+  10% {
+    transform: translate3d(1px, 0, 0) skewX(0.25deg);
+  }
+  24% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  38% {
+    transform: translate3d(2px, 0, 0) skewX(-0.3deg);
+  }
+  52% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  66% {
+    transform: none;
+  }
+  78% {
+    transform: translate3d(1px, 0, 0);
+  }
+}
+
+@keyframes egg-trance-flow {
+  0%,
+  100% {
+    transform: none;
+    filter: none;
+  }
+  25% {
+    transform: scale(1.012) rotate(0.25deg);
+    filter: saturate(1.3) hue-rotate(-8deg);
+  }
+  55% {
+    transform: scale(1.025) rotate(-0.35deg);
+    filter: saturate(1.55) hue-rotate(12deg) contrast(1.04);
+  }
+  80% {
+    transform: scale(1.01) rotate(0.1deg);
+    filter: saturate(1.2) hue-rotate(4deg);
+  }
+}
+
+@keyframes egg-trance-veil {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 0.55;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes egg-radar {
+  0% {
+    opacity: 0.75;
+    transform: scale(0.35);
+  }
+  80% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes egg-marker-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.25);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 40rem) {
+  .egg-scrim {
+    padding: 0.5rem;
+  }
+
+  .egg-panel {
+    border-radius: var(--radius-sm);
+  }
+
+  .egg-panel__system {
+    letter-spacing: 0.06em;
+  }
+
+  .egg-title {
+    font-size: clamp(1.9rem, 9vw, 2.6rem);
+  }
+
+  .egg-terminal__screen {
+    min-height: 14rem;
+    max-height: 42vh;
+    font-size: var(--step--1);
+  }
+
+  .egg-terminal__prompt {
+    font-size: var(--step--2);
+  }
+
+  .egg-completionist {
+    padding-inline: 1rem;
+  }
+}
