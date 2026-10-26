@@ -46,13 +46,13 @@ export const credits = [
     note: "Návrh projektu, obsah, kontrola zdrojov a zodpovednosť za zverejnené údaje.",
   },
   {
-    role: "Pôvodný základ projektu · AI",
-    name: "Big Pickle",
+    role: "Vyhladavaťel informácií",
+    name: "Jakub Lapin",
     note: "AI model, ktorý vygeneroval pôvodný základ projektu.",
   },
   {
-    role: "Plánovanie a spätná väzba · AI",
-    name: "ChatGPT",
-    note: "Pomoc s plánovaním, nápadmi, spätnou väzbou a vylepšeniami.",
+    role: "Žiť.",
+    name: "Erik",
+    note: "žil.",
   },
 ] as const;
